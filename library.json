@@ -1,0 +1,16 @@
+{
+    "name": "corelib",
+    "version": "1.0.0",
+    "description": "Common working base",
+    "keywords": "common,wifi,storage",
+    "license": "MIT",
+    "homepage": "https://www.helloworld.org/",
+    "dependencies": {
+      "googlecloudplatform/Google Cloud IoT Core JWT": "^1.1.11",
+      "256dpi/MQTT": "^2.4.8",
+      "bblanchon/ArduinoJson": "^6.17.2",
+      "jled": "4.5.2"
+    },
+    "frameworks": "arduino",
+    "platforms": "espressif8266,esp32dev"
+  }
