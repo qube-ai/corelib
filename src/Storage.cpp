@@ -179,16 +179,3 @@ void getTimezone(long *timezone_sec)
 {
     EEPROM.get(TIMEZONE_START, *timezone_sec);
 }
-
-bool setLastResetTime(long timestamp)
-{
-    EEPROM.put(LAST_RESET_TIME_START, timestamp);
-    bool a = EEPROM.commit();
-    delay(200);
-    return a;
-}
-
-void getLastResetTime(long *timestamp)
-{
-    EEPROM.get(LAST_RESET_TIME_START, *timestamp);
-}
