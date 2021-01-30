@@ -1,6 +1,6 @@
 {
     "name": "corelib",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Common working base",
     "keywords": "common,wifi,storage",
     "dependencies": {
