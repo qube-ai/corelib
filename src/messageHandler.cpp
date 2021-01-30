@@ -1,11 +1,13 @@
 #include <Arduino.h>
 #include "ArduinoJson.h"
 #include "FOTA.h"
-#include "device.h"
 #include "IoTCore.h"
 #include "Storage.h"
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
+
+// Forward declaring user defined userMessageReceived() function
+void userMessageReceived(MQTTClient *client, char topic[], char bytes[], int length);
 
 void updateWifiCredHandler(StaticJsonDocument<120> doc)
 {
@@ -39,11 +41,6 @@ void otaUpdateHandler(StaticJsonDocument<120> doc)
     Serial.println("Received a command to perform OTA update");
     String version = doc["ota_update"];
     performOTAUpdate(version);
-}
-
-void resetEnergyHandler(StaticJsonDocument<120> doc)
-{
-    resetEnergyReading();
 }
 
 void connectToHandler(StaticJsonDocument<120> doc)
@@ -100,11 +97,6 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[], int
         sendNewStateMessage = true;
     }
 
-    else if (doc.containsKey("reset_energy"))
-    {
-        resetEnergyHandler(doc);
-    }
-
     else if (doc.containsKey("connect_to"))
     {
         connectToHandler(doc);
@@ -112,7 +104,7 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[], int
 
     else
     {
-        Serial.println("A message was received that couldn't be parsed.");
+        userMessageReceived(client, topic, bytes, length);
     }
 
     // Check if state needs to be resent

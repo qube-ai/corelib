@@ -2,7 +2,6 @@
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include "ArduinoJson.h"
-#include "device.h"
 #include "messageHandler.h"
 
 WiFiUDP Udp;
@@ -13,6 +12,9 @@ char replyPacket[] = "Hi there! Got the message :-)"; // a reply string to send 
 IPAddress mobile_ip;
 uint16_t mobile_port;
 bool send_to_mobile = false;
+
+// Forward declaration of device state
+String getDeviceState();
 
 void setupAppCommunication()
 {
