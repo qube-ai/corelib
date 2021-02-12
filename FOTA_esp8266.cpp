@@ -6,8 +6,6 @@
 #include "ESP8266WiFi.h"
 #include "ESP8266WiFiMulti.h"
 
-// #include "device.h"
-
 #ifndef APSSID
 #define APSSID "Curiosity"
 #define APPSK "duckduckgo123"
