@@ -1,6 +1,6 @@
 #include "statusLed.h"
 #include "ESP8266WiFi.h"
-#include "IoTCore.h"
+#include "IoTCore_esp8266.h"
 #include <jled.h>
 
 JLed hw_led = JLed(STATUS_LED_PIN).Off();

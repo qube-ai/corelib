@@ -1,10 +1,10 @@
 #ifdef ESP8266
 
-#include "IoTCore.h"
+#include "IoTCore_esp8266.h"
 
 #include "WiFiManager.h"
 #include "Storage.h"
-#include "messageHandler.h"
+// #include "messageHandler.h"
 
 #include "MQTT.h"
 #include "CloudIoTCore.h"
@@ -19,6 +19,7 @@
 #include <ESP8266WiFiMulti.h>
 
 #include "statusLed.h"
+
 
 char project_id[33] = "";
 char location[32] = "";
@@ -137,18 +138,6 @@ bool publishState(String data)
 {
     return mqtt->publishState(data);
 }
-
-// void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[], int length)
-// {
-//     if (length > 0)
-//     {
-//         Serial.printf("incoming: %s - %s\n", topic, bytes);
-//     }
-//     else
-//     {
-//         Serial.printf("0\n"); // Success but no message
-//     }
-// }
 
 String getJwt()
 {

@@ -1,7 +1,9 @@
+#include "messageHandler.h"
+
 #include <Arduino.h>
 #include "ArduinoJson.h"
-#include "FOTA.h"
-#include "IoTCore.h"
+#include "FOTA_esp8266.h"
+#include "IoTCore_esp8266.h"
 #include "Storage.h"
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>

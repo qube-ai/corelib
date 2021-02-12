@@ -1,6 +1,7 @@
 #ifdef ESP32
 
 #include <Arduino.h>
+#include "FOTA_esp32.h"
 #include <Update.h>
 #include <WiFi.h>
 

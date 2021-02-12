@@ -31,20 +31,13 @@ unsigned long iat = 0;
 String jwt;
 
 
-// static CloudIoTCoreMqtt *mqtt;
-// static MQTTClient *mqttClient;
-// static BearSSL::WiFiClientSecure netClient;
-// static BearSSL::X509List certList;
-// static CloudIoTCoreDevice device;
-
-// unsigned long iat = 0;
-
 // Time (seconds) to expire token += 20 minutes for drift
 const int jwt_exp_secs = 3600 * 24; // Maximum 24H (3600*24)
 
 // In case we ever need extra topics
 const int ex_num_topics = 0;
 const char *ex_topics[ex_num_topics];
+
 
 static void getPrivateKey(char* private_key)
 {
@@ -94,7 +87,6 @@ static void getPrivateKey(char* private_key)
     SPIFFS.end();
 }
 
-
 bool publishTelemetry(String data)
 {
     return mqtt->publishTelemetry(data);
@@ -119,7 +111,6 @@ bool publishState(String data)
 {
     return mqtt->publishState(data);
 }
-
 
 String getJwt()
 {
@@ -181,5 +172,6 @@ void mqttLoop()
 bool connectedToMqtt() {
     return mqtt->loop();
 }
+
 
 #endif

@@ -1,12 +1,12 @@
 #ifdef ESP8266
 
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
+#include "FOTA_esp8266.h"
 
-#include <ESP8266HTTPClient.h>
-#include <ESP8266httpUpdate.h>
-#include "device.h"
+#include "ESP8266WiFi.h"
+#include "ESP8266WiFiMulti.h"
+
+// #include "device.h"
 
 #ifndef APSSID
 #define APSSID "Curiosity"
