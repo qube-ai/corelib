@@ -14,7 +14,7 @@ void corelib::setup()
     initStorage();
     Serial.println("initStorage() executed.");
 
-    setupCloudIoT();
+    iotcore::setupCloudIoT();
     Serial.println("setupCloudIoT() executed.");
 
     setupAppCommunication();
@@ -27,7 +27,7 @@ void corelib::setup()
 
 
 void corelib::loop() {
-    mqttLoop();
+    iotcore::mqttLoop();
     delay(10);
     wifiman::reconnectWiFi(false);
 }

@@ -116,6 +116,6 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[], int
         String stateInfo = getDeviceState();
         Serial.print("Sending state update as relay state has changed -> ");
         Serial.println(stateInfo);
-        publishState(stateInfo);
+        iotcore::publishState(stateInfo);
     }
 }

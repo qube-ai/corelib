@@ -2,25 +2,6 @@
 
 #include "IoTCore_esp8266.h"
 
-#include "WiFiManager.h"
-#include "Storage.h"
-// #include "messageHandler.h"
-
-#include "MQTT.h"
-#include "CloudIoTCore.h"
-#include "CloudIoTCoreMqtt.h"
-#include "CloudIoTCoreDevice.h"
-#include "ArduinoJson.h"
-
-#include <Arduino.h>
-#include <WiFiClientSecureBearSSL.h>
-#include "LittleFS.h"
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
-
-#include "statusLed.h"
-
-
 char project_id[33] = "";
 char location[32] = "";
 char registry_id[32] = "";
@@ -114,27 +95,27 @@ static void setupCertAndPrivateKey()
     LittleFS.end();
 }
 
-bool publishTelemetry(String data)
+bool iotcore::publishTelemetry(String data)
 {
     return mqtt->publishTelemetry(data);
 }
 
-bool publishTelemetry(const char *data, int length)
+bool iotcore::publishTelemetry(const char *data, int length)
 {
     return mqtt->publishTelemetry(data, length);
 }
 
-bool publishTelemetry(String subfolder, String data)
+bool iotcore::publishTelemetry(String subfolder, String data)
 {
     return mqtt->publishTelemetry(subfolder, data);
 }
 
-bool publishTelemetry(String subfolder, const char *data, int length)
+bool iotcore::publishTelemetry(String subfolder, const char *data, int length)
 {
     return mqtt->publishTelemetry(subfolder, data, length);
 }
 
-bool publishState(String data)
+bool iotcore::publishState(String data)
 {
     return mqtt->publishState(data);
 }
@@ -161,7 +142,7 @@ void connect()
     mqtt->mqttConnectAsync();
 }
 
-void setupCloudIoT()
+void iotcore::setupCloudIoT()
 {
     // Get all the data from storage
     getProjectID(project_id);
@@ -190,7 +171,7 @@ void setupCloudIoT()
     mqtt->startMQTTAdvanced(); // Opens connection using advanced callback
 }
 
-void mqttLoop()
+void iotcore::mqttLoop()
 {
     status_led::update();
     bool connected = mqtt->loop();
@@ -201,12 +182,12 @@ void mqttLoop()
     status_led::update();
 }
 
-bool connectedToMqtt()
+bool iotcore::connectedToMqtt()
 {
     return mqtt->loop();
 }
 
-void logSomeShit()
+void iotcore::logSomeShit()
 {
     // mqtt->logError();
     mqtt->logReturnCode();

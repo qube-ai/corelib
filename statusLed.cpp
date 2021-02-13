@@ -14,7 +14,7 @@ void status_led::updateStatusLed()
     {
         if (current_state == WL_CONNECTED)
         {
-            if (!connectedToMqtt())
+            if (!iotcore::connectedToMqtt())
             {
                 Serial.println("[updateStatusLed] MQTT Disconnected");
                 // status_led.mqttDisconnected();
