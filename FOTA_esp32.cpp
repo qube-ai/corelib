@@ -1,9 +1,6 @@
 #ifdef ESP32
 
-#include <Arduino.h>
 #include "FOTA_esp32.h"
-#include <Update.h>
-#include <WiFi.h>
 
 String host = "storage.googleapis.com";
 WiFiClient client;
@@ -18,7 +15,7 @@ String getHeaderValue(String header, String headerName)
     return header.substring(strlen(headerName.c_str()));
 }
 
-void performOTAUpdate(String version)
+void fota::performOTAUpdate(String version)
 {
     Serial.println("Starting OTA operation.");
 

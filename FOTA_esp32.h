@@ -2,8 +2,13 @@
 #define FOTA_H
 
 #include <Arduino.h>
+#include "FOTA_esp32.h"
+#include <Update.h>
+#include <WiFi.h>
 
 // Both ESP8266 and ESP32 FOTA source files define this function.
-void performOTAUpdate(String version);
+namespace fota {
+    void performOTAUpdate(String version);
+}
 
 #endif

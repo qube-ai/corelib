@@ -1,15 +1,6 @@
 #ifdef ESP8266
 
-#include <Arduino.h>
 #include "FOTA_esp8266.h"
-
-#include "ESP8266WiFi.h"
-#include "ESP8266WiFiMulti.h"
-
-#ifndef APSSID
-#define APSSID "Curiosity"
-#define APPSK "duckduckgo123"
-#endif
 
 ESP8266WiFiMulti WiFiMulti;
 
@@ -57,7 +48,7 @@ void update_error(int err)
     Serial.printf("CALLBACK:  HTTP update fatal error code %d\n", err);
 }
 
-void performOTAUpdate(String version)
+void fota::performOTAUpdate(String version)
 {
     Serial.println("Setting up for an OTA update");
     setupForOTA();

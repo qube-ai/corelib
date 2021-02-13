@@ -42,7 +42,7 @@ void otaUpdateHandler(StaticJsonDocument<120> doc)
 {
     Serial.println("Received a command to perform OTA update");
     String version = doc["ota_update"];
-    performOTAUpdate(version);
+    fota::performOTAUpdate(version);
 }
 
 void connectToHandler(StaticJsonDocument<120> doc)
