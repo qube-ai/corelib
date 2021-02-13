@@ -29,5 +29,5 @@ void corelib::setup()
 void corelib::loop() {
     mqttLoop();
     delay(10);
-    reconnectWiFi(false);
+    wifiman::reconnectWiFi(false);
 }

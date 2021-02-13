@@ -157,7 +157,7 @@ String getJwt()
 void connect()
 {
     Serial.println("[iotcore_esp8266] inside connect()");
-    reconnectWiFi(true);
+    wifiman::reconnectWiFi(true);
     mqtt->mqttConnectAsync();
 }
 
@@ -176,7 +176,7 @@ void setupCloudIoT()
     device.setDeviceId(device_id);
 
     // ESP8266 WiFi setup
-    setupWiFi();
+    wifiman::setupWiFi();
 
     // ESP8266 WiFi secure initialization and device private key
     setupCertAndPrivateKey();

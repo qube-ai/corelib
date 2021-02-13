@@ -1,16 +1,4 @@
 #include "WiFiManager.h"
-#include "Storage.h"
-#include <Arduino.h>
-
-#ifdef ESP8266
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
-
-#elif ESP32
-#include <WiFi.h>
-#endif
-
-#include <WiFiClientSecure.h>
 
 // Configuration for NTP
 const char *ntp_primary = "pool.ntp.org";
@@ -23,7 +11,7 @@ ESP8266WiFiMulti wifiMulti;
 boolean connectioWasAlive = true;
 bool apsAdded = false;
 
-void setupWiFi()
+void wifiman::setupWiFi()
 {
     if (!apsAdded)
     {
@@ -63,13 +51,12 @@ void setupWiFi()
 
     // Check if time is less than, 10th Oct, 2020. Keep delaying till we get the correct time.
     unsigned long temp = millis();
-    bool timeSyncComplete = false;
+    
     while ((millis() - temp) < 30 * 1000)
     {
         if (time(nullptr) > 1602374400)
         {
             Serial.println("TIME SYNCED");
-            timeSyncComplete = true;
             break;
         }
         else
@@ -80,7 +67,7 @@ void setupWiFi()
     }
 }
 
-void reconnectWiFi(bool log=true)
+void wifiman::reconnectWiFi(bool log=true)
 {
     if (log)
     {
