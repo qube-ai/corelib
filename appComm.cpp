@@ -88,22 +88,22 @@ void checkForAppCommMessages()
 
             if (doc.containsKey("ssid") && doc.containsKey("pass") && doc.containsKey("index"))
             {
-                updateWifiCredHandler(doc);
+                messageHandler::updateWifiCredHandler(doc);
             }
 
             else if (doc.containsKey("ota_update"))
             {
-                otaUpdateHandler(doc);
+                messageHandler::otaUpdateHandler(doc);
             }
 
             else if (doc.containsKey("reset_energy"))
             {
-                resetEnergyHandler(doc);
+                messageHandler::resetEnergyHandler(doc);
             }
 
             else if (doc.containsKey("connect_to"))
             {
-                connectToHandler(doc);
+                messageHandler::connectToHandler(doc);
             }
 
             else

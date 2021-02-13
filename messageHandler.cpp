@@ -11,7 +11,7 @@
 // Forward declaring user defined userMessageReceived() function
 void userMessageReceived(MQTTClient *client, char topic[], char bytes[], int length);
 
-void updateWifiCredHandler(StaticJsonDocument<120> doc)
+void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc)
 {
     Serial.println("Received a command to change WiFi cred");
     short index = doc["index"];
@@ -38,14 +38,14 @@ void updateWifiCredHandler(StaticJsonDocument<120> doc)
     }
 }
 
-void otaUpdateHandler(StaticJsonDocument<120> doc)
+void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc)
 {
     Serial.println("Received a command to perform OTA update");
     String version = doc["ota_update"];
     fota::performOTAUpdate(version);
 }
 
-void connectToHandler(StaticJsonDocument<120> doc)
+void messageHandler::connectToHandler(StaticJsonDocument<120> doc)
 {
     wifi_cred creds = getWiFiCreds(doc["connect_to"]);
 
@@ -89,19 +89,19 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[], int
 
     if (doc.containsKey("ssid") && doc.containsKey("pass") && doc.containsKey("index"))
     {
-        updateWifiCredHandler(doc);
+        messageHandler::updateWifiCredHandler(doc);
         sendNewStateMessage = true;
     }
 
     else if (doc.containsKey("ota_update"))
     {
-        otaUpdateHandler(doc);
+        messageHandler::otaUpdateHandler(doc);
         sendNewStateMessage = true;
     }
 
     else if (doc.containsKey("connect_to"))
     {
-        connectToHandler(doc);
+        messageHandler::connectToHandler(doc);
     }
 
     else
