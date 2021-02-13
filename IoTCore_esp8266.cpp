@@ -192,13 +192,13 @@ void setupCloudIoT()
 
 void mqttLoop()
 {
-    status_led_update();
+    status_led::update();
     bool connected = mqtt->loop();
 
     if (!connected) {
         mqtt->mqttConnectAsync();
     }
-    status_led_update();
+    status_led::update();
 }
 
 bool connectedToMqtt()

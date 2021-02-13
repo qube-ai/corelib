@@ -1,14 +1,11 @@
 #include "statusLed.h"
-#include "ESP8266WiFi.h"
-#include "IoTCore_esp8266.h"
-#include <jled.h>
 
 JLed hw_led = JLed(STATUS_LED_PIN).Off();
 enum status_led_state_t current_state = OFF;
 
 wl_status_t last_state = WiFi.status();
 
-void updateStatusLed()
+void status_led::updateStatusLed()
 {
     wl_status_t current_state = WiFi.status();
 
@@ -24,14 +21,14 @@ void updateStatusLed()
             }
             else
             {
-                status_led_wifi_connected();
+                status_led::wifi_connected();
                 Serial.println("WiFi Connected.");
             }
         }
         else
         {
             Serial.println("WiFi Disconnected");
-            status_led_wifi_disconnected();
+            status_led::wifi_disconnected();
         }
 
         // Update last state
@@ -39,7 +36,7 @@ void updateStatusLed()
     }
 }
 
-void status_led_setup_started()
+void status_led::setup_started()
 {
     if (current_state != SETUP_STARTED)
     {
@@ -50,7 +47,7 @@ void status_led_setup_started()
     }
 }
 
-void status_led_setup_complete()
+void status_led::setup_complete()
 {
     if (current_state != SETUP_COMPLETE)
     {
@@ -64,7 +61,7 @@ void status_led_setup_complete()
     }
 }
 
-void status_led_uplink_started()
+void status_led::uplink_started()
 {
     if (current_state != UPLINK_STARTED)
     {
@@ -73,13 +70,13 @@ void status_led_uplink_started()
         hw_led = JLed(STATUS_LED_PIN).FadeOff(500);
         while(hw_led.Update());
         current_state = UPLINK_STARTED;
-        status_led_wifi_connected();
+        status_led::wifi_connected();
     }
     hw_led.Update();
 }
 
 // Not being used right now
-void status_led_downlink_started()
+void status_led::downlink_started()
 {
     if (current_state != DOWNLINK_STARTED)
     {
@@ -89,12 +86,12 @@ void status_led_downlink_started()
         hw_led = JLed(STATUS_LED_PIN).Breathe(500).Repeat(3);
         while(hw_led.Update());
         current_state = DOWNLINK_STARTED;
-        status_led_wifi_connected();
+        status_led::wifi_connected();
     }
     hw_led.Update();
 }
 
-void status_led_wifi_connected()
+void status_led::wifi_connected()
 {
     if (current_state != WIFI_CONNECTED)
     {
@@ -106,7 +103,7 @@ void status_led_wifi_connected()
     hw_led.Update();
 }
 
-void status_led_wifi_disconnected()
+void status_led::wifi_disconnected()
 {
     if (current_state != WIFI_DISCONNECTED)
     {
@@ -119,7 +116,7 @@ void status_led_wifi_disconnected()
 }
 
 // Not being used right now
-void status_led_mqtt_disconnected()
+void status_led::mqtt_disconnected()
 {
     if (current_state != MQTT_DISCONNECTED)
     {
@@ -131,6 +128,6 @@ void status_led_mqtt_disconnected()
     hw_led.Update();
 }
 
-void status_led_update() {
+void status_led::update() {
     hw_led.Update();
 }
