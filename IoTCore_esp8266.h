@@ -1,29 +1,28 @@
 #pragma once
 
 #include <Arduino.h>
-#include "CloudIoTCoreMqtt.h"
 #include <jled.h>
-#include "WiFiManager.h"
+
+#include "CloudIoTCoreMqtt.h"
 #include "Storage.h"
+#include "WiFiManager.h"
 // #include "messageHandler.h"
 
-#include "MQTT.h"
-#include "CloudIoTCore.h"
-#include "CloudIoTCoreMqtt.h"
-#include "CloudIoTCoreDevice.h"
-#include "ArduinoJson.h"
-
 #include <Arduino.h>
-#include <WiFiClientSecureBearSSL.h>
-#include "LittleFS.h"
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
+#include <WiFiClientSecureBearSSL.h>
 
+#include "ArduinoJson.h"
+#include "CloudIoTCore.h"
+#include "CloudIoTCoreDevice.h"
+#include "CloudIoTCoreMqtt.h"
+#include "LittleFS.h"
+#include "MQTT.h"
 #include "statusLed.h"
 
 // To publish data to Cloud IoT Core
-namespace iotcore
-{
+namespace iotcore {
     bool publishTelemetry(String data);
     bool publishTelemetry(const char *data, int length);
     bool publishTelemetry(String subfolder, String data);
@@ -33,8 +32,7 @@ namespace iotcore
     void mqttLoop();
     bool connectedToMqtt();
     void logSomeShit();
-} // namespace iotcore
-
+}  // namespace iotcore
 
 extern char received_data[50];
 

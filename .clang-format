@@ -1,0 +1,8 @@
+BasedOnStyle: Google
+IndentWidth: 4
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: Always
+BreakBeforeTernaryOperators: true
+BreakStringLiterals: true
+IndentPPDirectives: BeforeHash
+NamespaceIndentation: All

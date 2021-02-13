@@ -3,9 +3,9 @@
 // TODO make the return type for this to be bool,
 // This would allow us to check whether we were able
 // to setup the device correctly or not.
-void corelib::setup()
-{
+void corelib::setup() {
     Serial.begin(BAUD_RATE);
+
     delay(1000);
     status_led::setup_started();
 
@@ -24,7 +24,6 @@ void corelib::setup()
 
     status_led::setup_complete();
 }
-
 
 void corelib::loop() {
     iotcore::mqttLoop();

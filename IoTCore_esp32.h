@@ -1,8 +1,9 @@
 #pragma once
 
 #include <Arduino.h>
-#include "CloudIoTCoreMqtt.h"
 #include <jled.h>
+
+#include "CloudIoTCoreMqtt.h"
 
 // To publish data to Cloud IoT Core
 bool publishTelemetry(String data);
@@ -22,4 +23,4 @@ extern char received_data[50];
 #ifdef UNIT_TEST
 extern String lastReceivedMessage;
 extern bool messageAvailable;
-#endif 
+#endif

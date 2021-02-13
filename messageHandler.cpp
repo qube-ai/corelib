@@ -1,22 +1,22 @@
 #include "messageHandler.h"
 
 #include <Arduino.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
+
 #include "ArduinoJson.h"
 #include "FOTA_esp8266.h"
 #include "IoTCore_esp8266.h"
 #include "Storage.h"
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
 
 // Forward declaring user defined userMessageReceived() function
-void userMessageReceived(MQTTClient *client, char topic[], char bytes[], int length);
+void userMessageReceived(MQTTClient *client, char topic[], char bytes[],
+                         int length);
 
-void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc)
-{
+void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc) {
     Serial.println("Received a command to change WiFi cred");
     short index = doc["index"];
-    if (index >= 0 && index <= 4)
-    {
+    if (index >= 0 && index <= 4) {
         storage::wifi_cred temp = storage::getWiFiCreds(index);
 
         Serial.print("Replacing SSID(");
@@ -30,27 +30,23 @@ void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc)
 
         storage::setWiFiCreds(index, ssid_string, pass_string);
         Serial.println("New WiFi credentials were saved successfully.");
-    }
-    else
-    {
-        Serial.print("Unable to update SSID and PASS. Index value out of range: ");
+    } else {
+        Serial.print(
+            "Unable to update SSID and PASS. Index value out of range: ");
         Serial.println(index);
     }
 }
 
-void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc)
-{
+void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc) {
     Serial.println("Received a command to perform OTA update");
     String version = doc["ota_update"];
     fota::performOTAUpdate(version);
 }
 
-void messageHandler::connectToHandler(StaticJsonDocument<120> doc)
-{
+void messageHandler::connectToHandler(StaticJsonDocument<120> doc) {
     storage::wifi_cred creds = storage::getWiFiCreds(doc["connect_to"]);
 
-    if (strlen(creds.ssid) > 0 && strlen(creds.password) > 0)
-    {
+    if (strlen(creds.ssid) > 0 && strlen(creds.password) > 0) {
         Serial.println("Disconnecting from exisiting network.");
         WiFi.disconnect();
 
@@ -59,25 +55,21 @@ void messageHandler::connectToHandler(StaticJsonDocument<120> doc)
 
         Serial.print("Connecting");
         long start_time = millis();
-        while (WiFi.status() != WL_CONNECTED)
-        {
+        while (WiFi.status() != WL_CONNECTED) {
             delay(500);
             Serial.print(".");
-            if ((millis() - start_time) > 30000)
-            {
+            if ((millis() - start_time) > 30000) {
                 Serial.println("Unable to connect to the specified network.");
                 break;
             }
         }
-    }
-    else
-    {
+    } else {
         Serial.println("No SSID and Pass found at specified index.");
     }
 }
 
-void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[], int length)
-{
+void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
+                             int length) {
     Serial.print("Incoming: ");
     Serial.print(topic);
     Serial.print(" - ");
@@ -87,31 +79,27 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[], int
     deserializeJson(doc, bytes);
     bool sendNewStateMessage = false;
 
-    if (doc.containsKey("ssid") && doc.containsKey("pass") && doc.containsKey("index"))
-    {
+    if (doc.containsKey("ssid") && doc.containsKey("pass") &&
+        doc.containsKey("index")) {
         messageHandler::updateWifiCredHandler(doc);
         sendNewStateMessage = true;
     }
 
-    else if (doc.containsKey("ota_update"))
-    {
+    else if (doc.containsKey("ota_update")) {
         messageHandler::otaUpdateHandler(doc);
         sendNewStateMessage = true;
     }
 
-    else if (doc.containsKey("connect_to"))
-    {
+    else if (doc.containsKey("connect_to")) {
         messageHandler::connectToHandler(doc);
     }
 
-    else
-    {
+    else {
         userMessageReceived(client, topic, bytes, length);
     }
 
     // Check if state needs to be resent
-    if (sendNewStateMessage)
-    {
+    if (sendNewStateMessage) {
         // Send a state update back to the server
         String stateInfo = getDeviceState();
         Serial.print("Sending state update as relay state has changed -> ");

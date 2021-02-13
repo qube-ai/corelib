@@ -1,7 +1,7 @@
 #pragma once
-#include <string>
-#include <EEPROM.h>
 #include <Arduino.h>
+#include <EEPROM.h>
+
 #include <string>
 
 #define EEPROM_SIZE 512
@@ -34,12 +34,10 @@
 
 #define AVAILABLE_SSIDS 5
 
-namespace storage
-{
+namespace storage {
 
-    class AbstractedStorage
-    {
-    public:
+    class AbstractedStorage {
+       public:
         void begin(int size);
 
         std::string readString(int address);
@@ -55,8 +53,7 @@ namespace storage
 
     extern AbstractedStorage storage;
 
-    struct wifi_cred
-    {
+    struct wifi_cred {
         char ssid[20];
         char password[20];
     };
@@ -90,4 +87,4 @@ namespace storage
     // Getter and Setter for last reset time for energy meter readings
     bool setLastResetTime(long timestamp);
     void getLastResetTime(long *timestamp);
-} // namespace storage
+}  // namespace storage
