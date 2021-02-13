@@ -11,7 +11,7 @@ void corelib::setup()
 
     Serial.println("Starting setup ");
 
-    initStorage();
+    storage::init();
     Serial.println("initStorage() executed.");
 
     iotcore::setupCloudIoT();

@@ -18,7 +18,7 @@ void wifiman::setupWiFi()
         // Connecting to a WiFi Network
         for (short i = 0; i < 5; i++)
         {
-            wifi_cred creds = getWiFiCreds(i);
+            storage::wifi_cred creds = storage::getWiFiCreds(i);
             if (strlen(creds.ssid) > 0 && strlen(creds.password) > 0)
             {
                 wifiMulti.addAP(creds.ssid, creds.password);
@@ -45,7 +45,7 @@ void wifiman::setupWiFi()
     Serial.println(WiFi.localIP());
 
     long current_timezone = 0;
-    getTimezone(&current_timezone);
+    storage::getTimezone(&current_timezone);
     Serial.printf("Current timezone -> %lds\n", current_timezone);
     configTime(current_timezone, 0, ntp_primary, ntp_secondary);
 

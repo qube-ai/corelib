@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <EEPROM.h>
+#include <Arduino.h>
+#include <string>
 
 #define EEPROM_SIZE 512
 
@@ -31,55 +34,60 @@
 
 #define AVAILABLE_SSIDS 5
 
-class AbstractedStorage {
+namespace storage
+{
+
+    class AbstractedStorage
+    {
     public:
         void begin(int size);
-        
+
         std::string readString(int address);
         bool writeString(int address, std::string data);
 
-        void readString(int address, char* data);
+        void readString(int address, char *data);
 
         uint8_t readByte(int address);
         void writeByte(int address, uint8_t data);
 
         void commit();
-};
+    };
 
-extern AbstractedStorage storage;
+    extern AbstractedStorage storage;
 
-struct wifi_cred
-{
-    char ssid[20];
-    char password[20];
-};
+    struct wifi_cred
+    {
+        char ssid[20];
+        char password[20];
+    };
 
-void initStorage();
+    void init();
 
-// Getters and Setters for WiFi credentials
-wifi_cred getWiFiCreds(short index);
-void setWiFiCreds(short index, std::string ssid, std::string pass);
+    // Getters and Setters for WiFi credentials
+    wifi_cred getWiFiCreds(short index);
+    void setWiFiCreds(short index, std::string ssid, std::string pass);
 
-// Getters for Project ID
-bool setProjectID(std::string project_id);
-void getProjectID(char* data);
+    // Getters for Project ID
+    bool setProjectID(std::string project_id);
+    void getProjectID(char *data);
 
-// Getters for Location
-bool setLocation(std::string location);
-void getLocation(char* data);
+    // Getters for Location
+    bool setLocation(std::string location);
+    void getLocation(char *data);
 
-// Getter for registry ID
-bool setRegistryID(std::string registry_id);
-void getRegistryID(char* data);
+    // Getter for registry ID
+    bool setRegistryID(std::string registry_id);
+    void getRegistryID(char *data);
 
-// Getters for Device ID
-bool setDeviceID(std::string device_id);
-void getDeviceID(char* data);
+    // Getters for Device ID
+    bool setDeviceID(std::string device_id);
+    void getDeviceID(char *data);
 
-// Getter and Setter for device timezone
-bool setTimezone(long timezone_sec);
-void getTimezone(long *timezone_sec);
+    // Getter and Setter for device timezone
+    bool setTimezone(long timezone_sec);
+    void getTimezone(long *timezone_sec);
 
-// Getter and Setter for last reset time for energy meter readings
-bool setLastResetTime(long timestamp);
-void getLastResetTime(long *timestamp);
+    // Getter and Setter for last reset time for energy meter readings
+    bool setLastResetTime(long timestamp);
+    void getLastResetTime(long *timestamp);
+} // namespace storage

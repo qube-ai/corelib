@@ -145,10 +145,10 @@ void connect()
 void iotcore::setupCloudIoT()
 {
     // Get all the data from storage
-    getProjectID(project_id);
-    getLocation(location);
-    getRegistryID(registry_id);
-    getDeviceID(device_id);
+    storage::getProjectID(project_id);
+    storage::getLocation(location);
+    storage::getRegistryID(registry_id);
+    storage::getDeviceID(device_id);
 
     // Setup device object
     device.setProjectId(project_id);

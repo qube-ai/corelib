@@ -17,7 +17,7 @@ void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc)
     short index = doc["index"];
     if (index >= 0 && index <= 4)
     {
-        wifi_cred temp = getWiFiCreds(index);
+        storage::wifi_cred temp = storage::getWiFiCreds(index);
 
         Serial.print("Replacing SSID(");
         Serial.print(temp.ssid);
@@ -28,7 +28,7 @@ void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc)
         const char *pass = doc["pass"];
         std::string pass_string(pass);
 
-        setWiFiCreds(index, ssid_string, pass_string);
+        storage::setWiFiCreds(index, ssid_string, pass_string);
         Serial.println("New WiFi credentials were saved successfully.");
     }
     else
@@ -47,7 +47,7 @@ void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc)
 
 void messageHandler::connectToHandler(StaticJsonDocument<120> doc)
 {
-    wifi_cred creds = getWiFiCreds(doc["connect_to"]);
+    storage::wifi_cred creds = storage::getWiFiCreds(doc["connect_to"]);
 
     if (strlen(creds.ssid) > 0 && strlen(creds.password) > 0)
     {

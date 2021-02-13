@@ -1,9 +1,6 @@
 #include "Storage.h"
-#include <EEPROM.h>
-#include <Arduino.h>
-#include <string>
 
-AbstractedStorage storage;
+storage::AbstractedStorage localStorage;
 
 int WIFI_CREDS_ADDR[5][2] = {
     {SSID0_START, PASS0_START},
@@ -12,19 +9,19 @@ int WIFI_CREDS_ADDR[5][2] = {
     {SSID3_START, PASS3_START},
     {SSID4_START, PASS4_START}};
 
-void AbstractedStorage::begin(int size)
+void storage::AbstractedStorage::begin(int size)
 {
     EEPROM.begin(size);
 }
 
-void AbstractedStorage::readString(int address, char *data)
+void storage::AbstractedStorage::readString(int address, char *data)
 {
     char temp[32];
     EEPROM.get(address, temp);
     strcpy(data, temp);
 }
 
-std::string AbstractedStorage::readString(int address)
+std::string storage::AbstractedStorage::readString(int address)
 {
     char temp[32];
     EEPROM.get(address, temp);
@@ -32,7 +29,7 @@ std::string AbstractedStorage::readString(int address)
     return final_string;
 }
 
-bool AbstractedStorage::writeString(int address, std::string data)
+bool storage::AbstractedStorage::writeString(int address, std::string data)
 {
     short length_of_array = data.length();
     const char *data_array = data.c_str();
@@ -48,22 +45,22 @@ bool AbstractedStorage::writeString(int address, std::string data)
     return a;
 }
 
-uint8_t AbstractedStorage::readByte(int address)
+uint8_t storage::AbstractedStorage::readByte(int address)
 {
     return EEPROM.read(address);
 }
 
-void AbstractedStorage::writeByte(int address, uint8_t data)
+void storage::AbstractedStorage::writeByte(int address, uint8_t data)
 {
     EEPROM.write(address, data);
 }
 
-void AbstractedStorage::commit()
+void storage::AbstractedStorage::commit()
 {
     EEPROM.commit();
 }
 
-void initStorage()
+void storage::init()
 {
 #ifndef UNIT_TEST
     Serial.print("Initialising local storage...");
@@ -86,22 +83,22 @@ void initStorage()
     }
 }
 
-wifi_cred getWiFiCreds(short index)
+storage::wifi_cred storage::getWiFiCreds(short index)
 {
-    wifi_cred temp;
-    storage.readString(WIFI_CREDS_ADDR[index][0], temp.ssid);
-    storage.readString(WIFI_CREDS_ADDR[index][1], temp.password);
+    storage::wifi_cred temp;
+    localStorage.readString(WIFI_CREDS_ADDR[index][0], temp.ssid);
+    localStorage.readString(WIFI_CREDS_ADDR[index][1], temp.password);
 
     return temp;
 }
 
-void setWiFiCreds(short index, std::string ssid, std::string password)
+void storage::setWiFiCreds(short index, std::string ssid, std::string password)
 {
     if (index >= 0 && index <= 4)
     {
-        storage.writeString(WIFI_CREDS_ADDR[index][0], ssid);
-        storage.writeString(WIFI_CREDS_ADDR[index][1], password);
-        storage.commit();
+        localStorage.writeString(WIFI_CREDS_ADDR[index][0], ssid);
+        localStorage.writeString(WIFI_CREDS_ADDR[index][1], password);
+        localStorage.commit();
 
 #ifndef UNIT_TEST
         Serial.print("Saved new WiFi creds to local storage at SSID");
@@ -119,55 +116,55 @@ void setWiFiCreds(short index, std::string ssid, std::string password)
     }
 }
 
-bool setProjectID(std::string project_id)
+bool storage::setProjectID(std::string project_id)
 {
-    return storage.writeString(PROJECT_ID_START, project_id);
+    return localStorage.writeString(PROJECT_ID_START, project_id);
 }
 
-void getProjectID(char *data)
+void storage::getProjectID(char *data)
 {
     char t[32];
     EEPROM.get(PROJECT_ID_START, t);
     strcpy(data, t);
 }
 
-bool setLocation(std::string location)
+bool storage::setLocation(std::string location)
 {
-    return storage.writeString(LOCATION_START, location);
+    return localStorage.writeString(LOCATION_START, location);
 }
 
-void getLocation(char *data)
+void storage::getLocation(char *data)
 {
     char t[32];
     EEPROM.get(LOCATION_START, t);
     strcpy(data, t);
 }
 
-bool setRegistryID(std::string registry_id)
+bool storage::setRegistryID(std::string registry_id)
 {
-    return storage.writeString(REGISTRY_ID_START, registry_id);
+    return localStorage.writeString(REGISTRY_ID_START, registry_id);
 }
 
-void getRegistryID(char *data)
+void storage::getRegistryID(char *data)
 {
     char t[32];
     EEPROM.get(REGISTRY_ID_START, t);
     strcpy(data, t);
 }
 
-bool setDeviceID(std::string device_id)
+bool storage::setDeviceID(std::string device_id)
 {
-    return storage.writeString(DEVICE_ID_START, device_id);
+    return localStorage.writeString(DEVICE_ID_START, device_id);
 }
 
-void getDeviceID(char *data)
+void storage::getDeviceID(char *data)
 {
     char t[32];
     EEPROM.get(DEVICE_ID_START, t);
     strcpy(data, t);
 }
 
-bool setTimezone(long timezone_sec)
+bool storage::setTimezone(long timezone_sec)
 {
     EEPROM.put(TIMEZONE_START ,timezone_sec);
     bool a = EEPROM.commit();
@@ -175,7 +172,7 @@ bool setTimezone(long timezone_sec)
     return a;
 }
 
-void getTimezone(long *timezone_sec)
+void storage::getTimezone(long *timezone_sec)
 {
     EEPROM.get(TIMEZONE_START, *timezone_sec);
 }
