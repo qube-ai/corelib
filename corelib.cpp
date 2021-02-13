@@ -17,7 +17,7 @@ void corelib::setup()
     iotcore::setupCloudIoT();
     Serial.println("setupCloudIoT() executed.");
 
-    setupAppCommunication();
+    appcomm::setupAppCommunication();
     Serial.println("setupAppCommunication() executed.");
 
     Serial.println("Setup complete");

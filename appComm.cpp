@@ -1,8 +1,4 @@
-#include <Arduino.h>
-#include <ESP8266WiFi.h>
-#include <WiFiUdp.h>
-#include "ArduinoJson.h"
-#include "messageHandler.h"
+#include "appComm.h"
 
 WiFiUDP Udp;
 unsigned int localUdpPort = 4000;                     // local port to listen on
@@ -16,13 +12,13 @@ bool send_to_mobile = false;
 // Forward declaration of device state
 String getDeviceState();
 
-void setupAppCommunication()
+void appcomm::setupAppCommunication()
 {
     Udp.begin(localUdpPort);
     Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
 }
 
-void checkForAppCommMessages()
+void appcomm::checkForAppCommMessages()
 {
     int packetSize = Udp.parsePacket();
     if (packetSize)
@@ -126,7 +122,7 @@ void checkForAppCommMessages()
     }
 }
 
-void sendAppCommMessage(String data)
+void appcomm::sendAppCommMessage(String data)
 {
     if (send_to_mobile)
     {
