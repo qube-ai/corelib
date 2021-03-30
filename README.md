@@ -9,6 +9,10 @@ $ pio lib install 256dpi/MQTT@2.4.8
 ## Defaults
   - If serial connection is not configured, then it is setup at 115200 baud
 
+## General Information
+  - Startup WiFi connect time = 3 seconds
+  - WiFi switch over time (when one wifi was turned off and the other one is still on) = 
+
 ## Configurations
 List of build variables that can be changed during the build phase
   - CORELIB_APP_COMM

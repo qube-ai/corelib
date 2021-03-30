@@ -10,6 +10,7 @@
 
 #elif ESP32
     #include <WiFi.h>
+    #include <WiFiMulti.h>
 #endif
 
 #include <WiFiClientSecure.h>

@@ -44,6 +44,9 @@ void corelib::loop() {
     #if defined(CORELIB_IOTCORE)
     iotcore::mqttLoop();
     delay(10);
+    #endif
+
+    #if defined(CORELIB_WIFI_MANAGER)
     wifiman::reconnectWiFi(false);
     #endif
 }

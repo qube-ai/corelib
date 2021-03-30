@@ -9,7 +9,14 @@ const char *ntp_secondary = "time.nist.gov";
 short CURRENT_STATE = NOT_CONNECTED;
 short CURRENT_SSID_INDEX = 0;
 
+#if defined(ESP8266)
 ESP8266WiFiMulti wifiMulti;
+#endif
+
+#if defined(ESP32)
+WiFiMulti wifiMulti;
+#endif
+
 boolean connectioWasAlive = true;
 bool apsAdded = false;
 
@@ -48,15 +55,20 @@ void wifiman::setupWiFi() {
     // Check if time is less than, 10th Oct, 2020. Keep delaying till we get the
     // correct time.
     unsigned long temp = millis();
-
+    bool time_sync_failed = true;
     while ((millis() - temp) < 30 * 1000) {
         if (time(nullptr) > 1602374400) {
             Serial.println("TIME SYNCED");
+            time_sync_failed = false;
             break;
         } else {
             delay(1000);
             Serial.print(".");
         }
+    }
+
+    if(time_sync_failed) {
+        Serial.println("Time sync failed. Maybe this network does not have an internet connection.");
     }
 }
 
