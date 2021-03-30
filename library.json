@@ -1,6 +1,6 @@
 {
     "name": "corelib",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Common working base for all our devices.",
     "keywords": "wifi,storage,iot-core,app-communication,status-led,fota",
     "authors": {
@@ -37,6 +37,13 @@
         "base": "examples/2_wifi_manager",
         "files": [
           "wifi_manager_example.cpp"
+        ]
+      },
+      {
+        "name": "3_cloud_iotcore",
+        "base": "examples/3_cloud_iotcore",
+        "files": [
+          "cloud_iotcore_example.cpp"
         ]
       }
     ]
