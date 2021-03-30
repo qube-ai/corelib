@@ -1,4 +1,4 @@
-#ifdef ESP32
+#if defined(ESP32) && defined(CORELIB_FOTA)
 
     #include "FOTA_esp32.h"
 

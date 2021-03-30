@@ -1,3 +1,4 @@
+#if defined(CORELIB_STATUS_LED)
 #include "statusLed.h"
 
 JLed hw_led = JLed(STATUS_LED_PIN).Off();
@@ -110,3 +111,5 @@ void status_led::mqtt_disconnected() {
 }
 
 void status_led::update() { hw_led.Update(); }
+
+#endif

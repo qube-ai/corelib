@@ -1,4 +1,4 @@
-#ifdef ESP8266
+#if defined(ESP8266) && defined(CORELIB_IOTCORE)
 
     #include "IoTCore_esp8266.h"
 

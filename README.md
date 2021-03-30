@@ -6,6 +6,15 @@ Install each dependencies globally before proceeding.
 $ pio lib install 256dpi/MQTT@2.4.8
 ```
 
+## Configurations
+List of build variables that can be changed during the build phase
+  - CORELIB_APP_COMM
+  - CORELIB_IOTCORE
+  - CORELIB_STATUS_LED
+  - CORELIB_STORAGE
+  - CORELIB_WIFI_MANAGER
+  - CORELIB_FOTA
+
 ## Design
 
 ![corelib design](media/corelib-diagrams-net.png)

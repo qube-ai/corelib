@@ -1,3 +1,5 @@
+#if defined(CORELIB_WIFI_MANAGER)
+
 #include "WiFiManager.h"
 
 // Configuration for NTP
@@ -70,3 +72,4 @@ void wifiman::reconnectWiFi(bool log = true) {
         Serial.println(WiFi.localIP());
     }
 }
+#endif

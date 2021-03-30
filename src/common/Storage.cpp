@@ -1,3 +1,5 @@
+#if defined(CORELIB_STORAGE)
+
 #include "Storage.h"
 
 storage::AbstractedStorage localStorage;
@@ -145,3 +147,4 @@ bool storage::setTimezone(long timezone_sec) {
 void storage::getTimezone(long *timezone_sec) {
     EEPROM.get(TIMEZONE_START, *timezone_sec);
 }
+#endif 

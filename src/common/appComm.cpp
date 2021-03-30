@@ -1,3 +1,5 @@
+#if defined(CORELIB_APP_COMM)
+
 #include "appComm.h"
 
 WiFiUDP Udp;
@@ -125,3 +127,4 @@ void appcomm::sendAppCommMessage(String data) {
         Serial.println("Don't have mobile IP address to send values to.");
     }
 }
+#endif

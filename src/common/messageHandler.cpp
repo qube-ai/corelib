@@ -1,3 +1,5 @@
+#if defined(CORELIB_IOTCORE)
+
 #include "messageHandler.h"
 
 #include <Arduino.h>
@@ -107,3 +109,4 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
         iotcore::publishState(stateInfo);
     }
 }
+#endif

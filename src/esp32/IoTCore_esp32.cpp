@@ -1,4 +1,4 @@
-#ifdef ESP32
+#if defined(ESP32) && defined(CORELIB_IOTCORE)
 
     #include <Arduino.h>
     #include <WiFiClientSecure.h>
