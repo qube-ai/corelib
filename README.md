@@ -1,10 +1,5 @@
 # corelib
-
-Install each dependencies globally before proceeding.
-
-```console
-$ pio lib install 256dpi/MQTT@2.4.8
-```
+Library for faster development of IoT devices.
 
 ## Defaults
   - If serial connection is not configured, then it is setup at 115200 baud

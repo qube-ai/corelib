@@ -1,18 +1,6 @@
 #if defined(ESP32) && defined(CORELIB_IOTCORE)
 
-    #include <Arduino.h>
-    #include <WiFiClientSecure.h>
-
-    #include "ArduinoJson.h"
-    #include "CloudIoTCore.h"
-    #include "CloudIoTCoreDevice.h"
-    #include "CloudIoTCoreMqtt.h"
-    #include "IoTCore.h"
-    #include "MQTT.h"
-    #include "SPIFFS.h"
-    #include "Storage.h"
-    #include "WiFiManager.h"
-    #include "messageHandler.h"
+#include "esp32/IoTCore_esp32.h"
 
 char project_id[33] = "";
 char location[32] = "";
@@ -78,21 +66,21 @@ static void getPrivateKey(char *private_key) {
     SPIFFS.end();
 }
 
-bool publishTelemetry(String data) { return mqtt->publishTelemetry(data); }
+bool iotcore::publishTelemetry(String data) { return mqtt->publishTelemetry(data); }
 
-bool publishTelemetry(const char *data, int length) {
+bool iotcore::publishTelemetry(const char *data, int length) {
     return mqtt->publishTelemetry(data, length);
 }
 
-bool publishTelemetry(String subfolder, String data) {
+bool iotcore::publishTelemetry(String subfolder, String data) {
     return mqtt->publishTelemetry(subfolder, data);
 }
 
-bool publishTelemetry(String subfolder, const char *data, int length) {
+bool iotcore::publishTelemetry(String subfolder, const char *data, int length) {
     return mqtt->publishTelemetry(subfolder, data, length);
 }
 
-bool publishState(String data) { return mqtt->publishState(data); }
+bool iotcore::publishState(String data) { return mqtt->publishState(data); }
 
 String getJwt() {
     iat = time(nullptr);
@@ -106,16 +94,16 @@ String getJwt() {
 }
 
 void connect() {
-    reconnectWiFi();
+    wifiman::reconnectWiFi(true);
     mqtt->mqttConnect();
 }
 
-void setupCloudIoT() {
+void iotcore::setupCloudIoT() {
     // Get all the data from storage
-    getProjectID(project_id);
-    getLocation(location);
-    getRegistryID(registry_id);
-    getDeviceID(device_id);
+    storage::getProjectID(project_id);
+    storage::getLocation(location);
+    storage::getRegistryID(registry_id);
+    storage::getDeviceID(device_id);
 
     // TODO get the private key somehow
     char private_key_str[200];
@@ -125,7 +113,7 @@ void setupCloudIoT() {
                                     device_id, private_key_str);
 
     // Setup WiFi
-    setupWiFi();
+    wifiman::setupWiFi();
 
     netClient = new WiFiClientSecure();
     mqttClient = new MQTTClient(512);
@@ -137,10 +125,10 @@ void setupCloudIoT() {
     mqtt->startMQTTAdvanced();
 }
 
-void mqttLoop() {
+void iotcore::mqttLoop() {
     if (!mqtt->loop()) { mqtt->mqttConnect(); }
 }
 
-bool connectedToMqtt() { return mqtt->loop(); }
+bool iotcore::connectedToMqtt() { return mqtt->loop(); }
 
 #endif

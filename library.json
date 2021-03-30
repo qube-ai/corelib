@@ -8,10 +8,10 @@
       "email": "apoorva@getqube.in"
     },
     "dependencies": {
-      "googlecloudplatform/Google Cloud IoT Core JWT": "^1.1.11",
-      "256dpi/MQTT": "^2.4.8",
-      "bblanchon/ArduinoJson": "^6.17.2",
-      "jled": "4.5.2"
+      "256dpi/MQTT": "2.4.8",
+      "googlecloudplatform/Google Cloud IoT Core JWT": "1.1.11",
+      "bblanchon/ArduinoJson": "6.17.2",
+      "jandelgado/JLed": "4.5.2"
     },
     "repository": {
       "type": "git",

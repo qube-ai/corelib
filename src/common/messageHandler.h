@@ -3,7 +3,11 @@
 #include <Arduino.h>
 
 #include "ArduinoJson.h"
+#include "esp32/IoTCore_esp32.h"
+
+#if defined(ESP8266)
 #include "IoTCore_esp8266.h"
+#endif
 
 // Can't put this into a namespace (this is shared between cloud iot core
 // library)
