@@ -6,7 +6,43 @@ Library for faster development of IoT devices.
 
 ## General Information
   - Startup WiFi connect time = 3 seconds
-  - WiFi switch over time (when one wifi was turned off and the other one is still on) = 
+  - WiFi switch over time (when one wifi was turned off and the other one is still on) = 5 seconds
+
+  - Use following commands to generate a P-256 Elliptic Curve key pair:
+    ```
+    openssl ecparam -genkey -name prime256v1 -noout -out ec_private.pem
+    openssl ec -in ec_private.pem -pubout -out ec_public.pem
+    ```
+
+  - Run the following command to get your private key
+    ```
+    openssl ec -in ec_private.pem -noout -text
+    ```
+
+  - Upload the public key to IoT Core under the respective gateway device.
+
+## Types of standard messages
+
+All system messages would range from -1 to negative infinity.
+All user messages/device messages from 1 to positive infinity.
+
+Type -1 is for updating WiFi credentials
+```
+{
+  "t": -1,
+  "ssid": "Qube",
+  "pass": "Deep0asdkj",
+  "index": 0
+}
+```
+
+Type -2 for sending an OTA update
+```
+{
+  "t": -2,
+  "version": "1.2.0"
+}
+```
 
 ## Configurations
 List of build variables that can be changed during the build phase

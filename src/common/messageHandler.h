@@ -4,6 +4,7 @@
 
 #include "ArduinoJson.h"
 #include "esp32/IoTCore_esp32.h"
+#include "common/Storage.h"
 
 #if defined(ESP8266)
 #include "IoTCore_esp8266.h"

@@ -126,7 +126,7 @@ void iotcore::setupCloudIoT() {
 }
 
 void iotcore::mqttLoop() {
-    if (!mqtt->loop()) { mqtt->mqttConnect(); }
+    if (!mqtt->loop()) { mqtt->mqttConnectAsync(); }
 }
 
 bool iotcore::connectedToMqtt() { return mqtt->loop(); }
