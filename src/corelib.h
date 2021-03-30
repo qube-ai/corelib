@@ -1,9 +1,9 @@
 #include <Arduino.h>
 
-#include "Storage.h"
-#include "WiFiManager.h"
-#include "appComm.h"
-#include "statusLed.h"
+#include "common/Storage.h"
+#include "common/WiFiManager.h"
+#include "common/appComm.h"
+#include "common/statusLed.h"
 
 #ifdef ESP8266
     #include "FOTA_esp8266.h"
