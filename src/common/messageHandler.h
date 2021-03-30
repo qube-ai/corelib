@@ -18,8 +18,7 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
 namespace messageHandler {
     void updateWifiCredHandler(StaticJsonDocument<120> doc);
     void otaUpdateHandler(StaticJsonDocument<120> doc);
-    void resetEnergyHandler(StaticJsonDocument<120> doc);
-    void connectToHandler(StaticJsonDocument<120> doc);
+    void registerUserCallback(void (*messageReceivedUserCallback)(MQTTClient *client, char topic[], char bytes[], int length));
 }  // namespace messageHandler
 
 // Forward declarations - Don't use this

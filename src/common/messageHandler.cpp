@@ -6,6 +6,8 @@
 // void userMessageReceived(MQTTClient *client, char topic[], char bytes[],
 //                          int length);
 
+static bool userMessageCallbackRegistered = false;
+static void (*messageReceivedUserCallback)(MQTTClient *client, char topic[], char bytes[], int length);
 
 void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc) {
     Serial.println("Received a message to perform an OTA update.");
@@ -71,7 +73,13 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
     }
 
     else {
-        Serial.println("Unknown message type was received.");
+        if(userMessageCallbackRegistered) {
+            messageReceivedUserCallback(client, topic, bytes, length);
+        }
+        else {
+            Serial.println("user message callback hasn't been registered.");
+        }
+        
         // userMessageReceived(client, topic, bytes, length);
     }
 
@@ -86,6 +94,12 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
         
         iotcore::publishState(stateInfo);
     }
+}
+
+void messageHandler::registerUserCallback(void (*callbackFunction)(MQTTClient *client, char topic[], char bytes[], int length)) {
+    userMessageCallbackRegistered = true;
+    messageReceivedUserCallback = callbackFunction;
+    Serial.println("An incoming cloud message handler was assigned.");
 }
 
 

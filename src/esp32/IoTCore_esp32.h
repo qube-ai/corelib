@@ -25,7 +25,6 @@ void setupCloudIoT();
 void mqttLoop();
 
 bool connectedToMqtt();
-void logSomeShit();
 }
 
 extern char received_data[50];
