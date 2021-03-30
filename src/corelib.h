@@ -1,25 +1,36 @@
 #include <Arduino.h>
 
+#if defined(CORELIB_STORAGE)
 #include "common/Storage.h"
+#endif
+
+#if defined(CORELIB_WIFI_MANAGER)
 #include "common/WiFiManager.h"
+#endif
+
+#if defined(CORELIB_APP_COMM)
 #include "common/appComm.h"
+#endif
+
+#if defined(CORELIB_STATUS_LED)
 #include "common/statusLed.h"
-
-#ifdef ESP8266
-    #include "FOTA_esp8266.h"
-    #include "IoTCore_esp8266.h"
 #endif
 
-#ifdef ESP32
-    #include "FOTA_esp32.h"
-    #include "IoTCore_esp32.h"
+#if defined(ESP32) && defined(CORELIB_FOTA)
+#include "esp32/FOTA_esp32.h"
 #endif
 
-/*
- * Default baud rate at which the device should
- * communicate.
- */
-#define BAUD_RATE 9600
+#if defined(ESP32) && defined(CORELIB_IOTCORE)
+#include "esp32/IoTCore_esp32.h"
+#endif
+
+#if defined(ESP8266) && defined(CORELIB_FOTA)
+#include "esp8266/FOTA_esp8266.h"
+#endif
+
+#if defined(ESP8266) && defined(CORELIB_IOTCORE)
+#include "esp8266/IoTCore_esp8266.h"
+#endif
 
 namespace corelib {
     void setup();
