@@ -1,6 +1,6 @@
 {
     "name": "corelib",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Common working base for all our devices.",
     "keywords": "wifi,storage,iot-core,app-communication,status-led,fota",
     "authors": {
@@ -26,8 +26,15 @@
     ],
     "examples": [
       {
-        "name": "Storage",
+        "name": "1_storage",
         "base": "examples/1_storage",
+        "files": [
+          "main.cpp"
+        ]
+      },
+      {
+        "name": "2_wifi_manager",
+        "base": "examples/2_wifi_manager",
         "files": [
           "main.cpp"
         ]
