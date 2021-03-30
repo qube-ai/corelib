@@ -6,8 +6,11 @@
 // void userMessageReceived(MQTTClient *client, char topic[], char bytes[],
 //                          int length);
 
-static bool userMessageCallbackRegistered = false;
-static void (*messageReceivedUserCallback)(MQTTClient *client, char topic[], char bytes[], int length);
+bool userMessageCallbackRegistered = false;
+void (*messageReceivedUserCallback)(MQTTClient *client, char topic[], char bytes[], int length);
+
+bool deviceStateCallbackRegistered = false;
+String (*deviceStateCallback)();
 
 void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc) {
     Serial.println("Received a message to perform an OTA update.");
@@ -79,17 +82,20 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
         else {
             Serial.println("user message callback hasn't been registered.");
         }
-        
-        // userMessageReceived(client, topic, bytes, length);
     }
 
     // Check if state needs to be resent
     if (sendNewStateMessage) {
         // Send a state update back to the server
-        // String stateInfo = getDeviceState();
-        String stateInfo = "{\"ping\": \"pong\"}";
+        String stateInfo;
+        if(deviceStateCallbackRegistered) {
+            stateInfo = deviceStateCallback();
+        }
+        else {
+            stateInfo = "{\"ping\": \"pong\"}";
+        }
         
-        Serial.print("Sending state update as relay state has changed -> ");
+        Serial.print("Sending state update -> ");
         Serial.println(stateInfo);
         
         iotcore::publishState(stateInfo);
@@ -100,6 +106,12 @@ void messageHandler::registerUserCallback(void (*callbackFunction)(MQTTClient *c
     userMessageCallbackRegistered = true;
     messageReceivedUserCallback = callbackFunction;
     Serial.println("An incoming cloud message handler was assigned.");
+}
+
+void messageHandler::registerDeviceStateFunction(String (*callback)()) {
+    deviceStateCallbackRegistered = true;
+    deviceStateCallback = callback;
+    Serial.println("device state generator was registered.");
 }
 
 

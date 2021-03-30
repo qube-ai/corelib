@@ -19,6 +19,7 @@ namespace messageHandler {
     void updateWifiCredHandler(StaticJsonDocument<120> doc);
     void otaUpdateHandler(StaticJsonDocument<120> doc);
     void registerUserCallback(void (*messageReceivedUserCallback)(MQTTClient *client, char topic[], char bytes[], int length));
+    void registerDeviceStateFunction(String (*deviceStateCallback)());
 }  // namespace messageHandler
 
 // Forward declarations - Don't use this
