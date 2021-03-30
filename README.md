@@ -6,6 +6,9 @@ Install each dependencies globally before proceeding.
 $ pio lib install 256dpi/MQTT@2.4.8
 ```
 
+## Defaults
+  - If serial connection is not configured, then it is setup at 115200 baud
+
 ## Configurations
 List of build variables that can be changed during the build phase
   - CORELIB_APP_COMM
