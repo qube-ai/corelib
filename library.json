@@ -1,14 +1,36 @@
 {
     "name": "corelib",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Common working base for all our devices.",
     "keywords": "wifi,storage,iot-core,app-communication,status-led,fota",
+    "authors": {
+      "name": "Apoorva Singh",
+      "email": "apoorva@getqube.in"
+    },
     "dependencies": {
       "googlecloudplatform/Google Cloud IoT Core JWT": "^1.1.11",
       "256dpi/MQTT": "^2.4.8",
       "bblanchon/ArduinoJson": "^6.17.2",
       "jled": "4.5.2"
     },
-    "frameworks": "arduino",
-    "platforms": "espressif8266,esp32dev"
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/qube-ai/corelib"
+    },
+    "frameworks": [
+      "arduino"
+    ],
+    "platforms": [
+      "espressif8266",
+      "espressif32"
+    ],
+    "examples": [
+      {
+        "name": "Storage",
+        "base": "examples/1_storage",
+        "files": [
+          "main.cpp"
+        ]
+      }
+    ]
   }
