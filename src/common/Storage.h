@@ -35,7 +35,8 @@
 #define AVAILABLE_SSIDS 5
 
 namespace storage {
-
+    
+    /// Class used to abstract different stroage methods in ESP32 and ESP8266
     class AbstractedStorage {
        public:
         void begin(int size);
@@ -58,30 +59,222 @@ namespace storage {
         char password[20];
     };
 
+
+    /**
+     * @brief Initialize storage
+     * @note This function needs to be called before any other function.
+     * 
+     */
     void init();
 
-    // Getters and Setters for WiFi credentials
+
+    /**
+     * @brief Get stored WiFi Credentials from storage
+     * 
+     * @param index Value ranges from 0 to 4
+     * @return wifi_cred Return SSID and Pass in wifi_cred struct
+     * 
+     * ### Example
+     * ~~~~~~~~~~~~~~~~~~~~~~~.cpp
+     * 
+     * wifi_cred c1 = storage::getWiFiCreds(0);
+     * 
+     * ~~~~~~~~~~~~~~~~~~~~~~~
+     * 
+     */
     wifi_cred getWiFiCreds(short index);
+    
+
+    /**
+     * @brief Set WiFi credentials in sotrage
+     * 
+     * @param index Index at which you want to store it (0 to 4)
+     * @param ssid WiFi AP SSID as string
+     * @param pass WiFi AP password as string
+     * 
+     * ### Example
+     * ~~~~~~~~~~~~~~~~~~~~~~~.cpp
+     * 
+     * storage::setWiFiCreds(0, "Qube", "Deepwaves007");
+     * 
+     * ~~~~~~~~~~~~~~~~~~~~~~~
+     */
     void setWiFiCreds(short index, std::string ssid, std::string pass);
 
-    // Getters for Project ID
+
+    /**
+     * @brief Set Google Cloud IoT core project ID to storage
+     * 
+     * @param project_id Google Cloud IoT Core Project ID
+     * @return true Set successfully
+     * @return false Unable to set. Something went wrong.
+     * 
+     * ### Example
+     * ~~~~~~~~~~~~~~~~~~~~~~~.cpp
+     * 
+     * storage::setProjectID("podnet-switch");
+     * 
+     * ~~~~~~~~~~~~~~~~~~~~~~~
+     * 
+     */
     bool setProjectID(std::string project_id);
+    
+
+    /**
+     * @brief Set Google Cloud project ID from storage
+     * 
+     * @param data Character array in which project ID will be copied.
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * char project_id[20] = "";
+     * storage::getProjectID(project_id);
+     * 
+     * ~~~~~~~~~~
+     */
     void getProjectID(char *data);
 
-    // Getters for Location
+    
+    /**
+     * @brief Set Google Cloud IoT Core location (default us-central1)
+     * 
+     * @param location String that describes the location of Google Cloud server
+     * @return true Saved successfully
+     * @return false Not saved
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * storage::setLocation("us-central1");
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
     bool setLocation(std::string location);
+
+
+    /**
+     * @brief Get Google Cloud IoT Core location from storage
+     * 
+     * @param data variable where location string is copied
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * char location[20] = "";
+     * storage::getLocation(location);
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
     void getLocation(char *data);
 
-    // Getter for registry ID
+
+    /**
+     * @brief Set Google Cloud IoT Core registry ID to storage
+     * 
+     * @param registry_id Registry ID string
+     * @return true Saved successfuly
+     * @return false Not saved
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * storage::setRegistryID("test-registry");
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
     bool setRegistryID(std::string registry_id);
+
+
+    /**
+     * @brief Get Google Cloud IoT core registry ID from storage
+     * 
+     * @param data Registry ID is copied to this variable
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * char registry_id[20] = "";
+     * storage::getRegistryID(registry_id);
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
     void getRegistryID(char *data);
 
-    // Getters for Device ID
-    bool setDeviceID(std::string device_id);
+
+    /**
+     * @brief Set Google Cloud IoT Core device ID or gateway ID to storage
+     * 
+     * @param device_id Device ID to be stored
+     * @return true Saved successfully
+     * @return false Not saved
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * storage::setDeviceID("SW2-30A-2");
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
+    bool setDeviceID(std::string device_id); 
+
+
+    /**
+     * @brief Get Google Cloud IoT Core device ID or gateway ID from storage
+     * 
+     * @param data Variable where device ID is copied
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * char device_id[20] = "";
+     * storage::getDeviceID(device_id);
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
     void getDeviceID(char *data);
 
-    // Getter and Setter for device timezone
+    /// Set current timezone to storage
+
+    /**
+     * @brief Set the timezone for the current device
+     * 
+     * @param timezone_sec Time to store in seconds
+     * @return true Saved successfully
+     * @return false Failed to save
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * storage::setTimezone(19800);  // 5 hrs 30 minutes = 19800 seconds
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
     bool setTimezone(long timezone_sec);
+
+    /// Get current timezone from storage
+
+    /**
+     * @brief Get timezone of the device from storage
+     * 
+     * @param timezone_sec Variable to which timezone information is copied (in seconds)
+     * 
+     * ### Example
+     * ~~~~~~~~~~.cpp
+     * 
+     * long timezone = 0;
+     * storage::getTimezone(&timezone);  // 5 hrs 30 minutes = 19800 seconds
+     * 
+     * ~~~~~~~~~~
+     * 
+     */
     void getTimezone(long *timezone_sec);
 
     // Getter and Setter for last reset time for energy meter readings
