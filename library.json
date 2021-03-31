@@ -1,6 +1,6 @@
 {
     "name": "corelib",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "Common working base for all our devices.",
     "keywords": "wifi,storage,iot-core,app-communication,status-led,fota",
     "authors": {
@@ -58,6 +58,13 @@
         "base": "examples/5_device_state",
         "files": [
           "device_state_example.cpp"
+        ]
+      },
+      {
+        "name": "6_fota",
+        "base": "examples/6_fota",
+        "files": [
+          "fota_example.cpp"
         ]
       }
     ]

@@ -1,6 +1,7 @@
 #if defined(CORELIB_IOTCORE)
 
 #include "messageHandler.h"
+#include "esp32/FOTA_esp32.h"
 
 // // Forward declaring user defined userMessageReceived() function
 // void userMessageReceived(MQTTClient *client, char topic[], char bytes[],
@@ -14,6 +15,12 @@ String (*deviceStateCallback)();
 
 void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc) {
     Serial.println("Received a message to perform an OTA update.");
+    if(doc.containsKey("version")) {
+        fota::performOTAUpdate(doc["version"]);
+    }
+    else {
+        Serial.println("Structure of version");
+    }
 }
 
 void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc) {

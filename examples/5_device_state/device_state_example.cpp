@@ -14,6 +14,9 @@ void setup() {
     Serial.begin(115200);
     delay(100);
 
+    corelib::setup();
+    Serial.println("corelib setup complete.");
+
     // Set WiFi creds
     storage::setWiFiCreds(0, "Apoorva", "testing123");
     storage::setWiFiCreds(1, "Hrithik", "testing123");
@@ -52,9 +55,6 @@ void setup() {
     char device_id[20] = "";
     storage::getDeviceID(device_id);
     Serial.printf("Device ID -> %s\n", device_id);
-
-    corelib::setup();
-    Serial.println("corelib setup complete.");
 
     // Setup callback for IoTCore
     messageHandler::registerUserCallback(myCallback);
