@@ -6,47 +6,40 @@
 void corelib::setup() {
     // If Serial has not been initialized
     // Setup serial connection
-    if(!Serial) {
-        Serial.begin(115200);
-    }
+    if (!Serial) { Serial.begin(115200); }
 
     delay(1000);
 
-    #if defined(CORELIB_STATUS_LED)
+#if defined(CORELIB_STATUS_LED)
     status_led::setup_started();
-    #endif
+#endif
 
     Serial.println("Starting setup ");
 
-    #if defined(CORELIB_STORAGE)
+#if defined(CORELIB_STORAGE)
     storage::init();
     Serial.println("initStorage() executed.");
-    #endif
+#endif
 
-    #if defined(CORELIB_IOTCORE)
+#if defined(CORELIB_IOTCORE)
     iotcore::setupCloudIoT();
     Serial.println("setupCloudIoT() executed.");
-    #endif
+#endif
 
-    #if defined(CORELIB_APP_COMM)
+#if defined(CORELIB_APP_COMM)
     appcomm::setupAppCommunication();
     Serial.println("setupAppCommunication() executed.");
-    #endif
+#endif
 
     Serial.println("Setup complete");
-    
-    #if defined(CORELIB_STATUS_LED)
+
+#if defined(CORELIB_STATUS_LED)
     status_led::setup_complete();
-    #endif
+#endif
 }
 
 void corelib::loop() {
-    #if defined(CORELIB_IOTCORE)
-    iotcore::mqttLoop();
-    delay(10);
-    #endif
-
-    #if defined(CORELIB_WIFI_MANAGER)
-    wifiman::reconnectWiFi(false);
-    #endif
+#if defined(CORELIB_IOTCORE)
+    iotcore::mainLoop();
+#endif
 }

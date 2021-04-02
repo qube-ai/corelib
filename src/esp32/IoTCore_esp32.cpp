@@ -1,6 +1,6 @@
 #if defined(ESP32) && defined(CORELIB_IOTCORE)
 
-#include "esp32/IoTCore_esp32.h"
+    #include "esp32/IoTCore_esp32.h"
 
 char project_id[33] = "";
 char location[32] = "";
@@ -22,6 +22,55 @@ const int jwt_exp_secs = 3600 * 24;  // Maximum 24H (3600*24)
 // In case we ever need extra topics
 const int ex_num_topics = 0;
 const char *ex_topics[ex_num_topics];
+
+    #if defined(CORELIB_GATEWAY)
+
+void attachAndSubscribeNode(String delegateId) {
+    // aattach delegate device
+    String dat = "{}";
+    mqttClient->publish(String("/devices/" + delegateId + "/attach").c_str(),
+                        dat.c_str(), false, 1);
+
+    // subscribe to delegate configuration
+    mqttClient->subscribe("/devices/" + delegateId + "/config", 1);
+
+    // subscribe to delegate commands
+    mqttClient->subscribe("/devices/" + delegateId + "/commands/#", 0);
+}
+
+static void setupNodes() {
+    if (!SPIFFS.begin()) {
+        Serial.println("Failed to mount file system.");
+        return;
+    }
+
+    File f = SPIFFS.open("/devices.txt", "r");
+    if (f) {
+        // size_t size = f.size();
+        // uint8_t data[size];
+        // f.read(data, size);
+
+        // 512 bytes can store upto 50 devices
+        StaticJsonDocument<512> doc;
+        DeserializationError error = deserializeJson(doc, f);
+        if (error) {
+            Serial.println("Failed to read devices.txt file.");
+            return;
+        }
+
+        JsonArray array = doc.as<JsonArray>();
+        for (JsonVariant device : array) {
+            Serial.print("Attaching delegate device -> ");
+            Serial.println(device.as<String>());
+            attachAndSubscribeNode(device.as<String>());
+            mqttClient->loop();
+        }
+
+        f.close();
+    }
+}
+
+    #endif
 
 static void getPrivateKey(char *private_key) {
     // If using the (preferred) method with the cert and private key in /data
@@ -66,7 +115,9 @@ static void getPrivateKey(char *private_key) {
     SPIFFS.end();
 }
 
-bool iotcore::publishTelemetry(String data) { return mqtt->publishTelemetry(data); }
+bool iotcore::publishTelemetry(String data) {
+    return mqtt->publishTelemetry(data);
+}
 
 bool iotcore::publishTelemetry(const char *data, int length) {
     return mqtt->publishTelemetry(data, length);
@@ -81,6 +132,20 @@ bool iotcore::publishTelemetry(String subfolder, const char *data, int length) {
 }
 
 bool iotcore::publishState(String data) { return mqtt->publishState(data); }
+
+    #if defined(CORELIB_GATEWAY)
+bool iotcore::publishDelegateTelemetry(String delegateId, String data) {
+    return mqttClient->publish(
+        String("/devices/" + delegateId + "/events").c_str(),
+        String(data).c_str(), false, 1);
+}
+
+bool iotcore::publishDelegateState(String delegateId, String data) {
+    return mqttClient->publish(
+        String("/devices/" + delegateId + "/state").c_str(),
+        String(data).c_str(), false, 1);
+}
+    #endif
 
 String getJwt() {
     iat = time(nullptr);
@@ -118,11 +183,30 @@ void iotcore::setupCloudIoT() {
     netClient = new WiFiClientSecure();
     mqttClient = new MQTTClient(512);
     mqttClient->setOptions(180, true,
-                           1000);  // keepAlive, cleanSession, timeout
+                           10000);  // keepAlive, cleanSession, timeout
     mqtt = new CloudIoTCoreMqtt(mqttClient, netClient, device);
     mqtt->setUseLts(true);
     mqtt->setLogConnect(false);
     mqtt->startMQTTAdvanced();
+
+    #if defined(CORELIB_GATEWAY)
+    mqttClient->subscribe("/devices/" + String(device_id) + "/errors", 0);
+    #endif
+}
+
+void iotcore::mainLoop() {
+    mqtt->loop();
+    delay(10);
+
+    if (!mqttClient->connected()) {
+        wifiman::reconnectWiFi(true);
+        mqtt->mqttConnectAsync();
+
+    #if defined(CORELIB_GATEWAY)
+        setupNodes();
+        delay(500);
+    #endif
+    }
 }
 
 void iotcore::mqttLoop() {
