@@ -1,10 +1,16 @@
 #include <Arduino.h>
+
+#include "ArduinoJson.h"
 #include "corelib.h"
 
-void myCallback(MQTTClient *client, char topic[], char bytes[], int length) {
-    Serial.println("myCallback was called.");
+void myCallback(MQTTClient *client, char topic[], StaticJsonDocument<120> doc) {
+    // Serialize and create a new JSON string representation
+    String final_payload;
+    serializeJson(doc, final_payload);
+    Serial.print("myCallback payload -> ");
+    Serial.println(final_payload);
 }
- 
+
 String deviceState() {
     String state = "{\"ping2\": \"pong2\"}";
     return state;
@@ -25,12 +31,13 @@ void setup() {
     storage::setWiFiCreds(4, "", "");
 
     // Get WiFi Creds
-    storage::wifi_cred cred1  = storage::getWiFiCreds(0);
-    storage::wifi_cred cred2  = storage::getWiFiCreds(1);
+    storage::wifi_cred cred1 = storage::getWiFiCreds(0);
+    storage::wifi_cred cred2 = storage::getWiFiCreds(1);
 
-    Serial.printf("Credential 1 SSID: %s, Pass: %s\n", cred1.ssid, cred1.password);
-    Serial.printf("Credential 2 SSID: %s, Pass: %s\n", cred2.ssid, cred2.password);
-
+    Serial.printf("Credential 1 SSID: %s, Pass: %s\n", cred1.ssid,
+                  cred1.password);
+    Serial.printf("Credential 2 SSID: %s, Pass: %s\n", cred2.ssid,
+                  cred2.password);
 
     // Set IoTCore details
     storage::setProjectID("podnet-switch");
@@ -63,6 +70,4 @@ void setup() {
     Serial.println("All work in setup section is complete.");
 }
 
-void loop() {
-    corelib::loop();
-}
+void loop() { corelib::loop(); }

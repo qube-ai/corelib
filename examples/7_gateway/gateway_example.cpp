@@ -2,10 +2,15 @@
 
     #include <Arduino.h>
 
+    #include "ArduinoJson.h"
     #include "corelib.h"
 
-void myCallback(MQTTClient *client, char topic[], char bytes[], int length) {
-    Serial.println("myCallback was called.");
+void myCallback(MQTTClient *client, char topic[], StaticJsonDocument<120> doc) {
+    // Serialize and create a new JSON string representation
+    String final_payload;
+    serializeJson(doc, final_payload);
+    Serial.print("myCallback payload -> ");
+    Serial.println(final_payload);
 }
 
 String deviceState() {
