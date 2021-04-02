@@ -34,7 +34,7 @@
    <div id="projectname">corelib
    &#160;<span id="projectnumber">1.0.10</span>
    </div>
-   <div id="projectbrief">Library for doing general things on ESP32 and ESP8266</div>
+   <div id="projectbrief">Library for handling storage, wifi connectivity, IoT Core connectivity, OTA update and WiFi cred changes on ESP8266 and ESP32.</div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('classstorage_1_1_abstracted_storage.ht
 </div><!--header-->
 <div class="contents">
 
-<p>Class used to abstract different stroage methods in ESP32 and ESP8266.  
+<p>Class to provide consistent API for accessing storage in ESP32 and ESP8266.  
  <a href="classstorage_1_1_abstracted_storage.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_storage_8h_source.html">Storage.h</a>&gt;</code></p>
@@ -110,24 +110,29 @@ $(document).ready(function(){initNavTree('classstorage_1_1_abstracted_storage.ht
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a06475b4564074ef682bc14ad732812e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html#a06475b4564074ef682bc14ad732812e8">begin</a> (int size)</td></tr>
+<tr class="memdesc:a06475b4564074ef682bc14ad732812e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the EEPROM for storing and fetching data.  <a href="classstorage_1_1_abstracted_storage.html#a06475b4564074ef682bc14ad732812e8">More...</a><br /></td></tr>
 <tr class="separator:a06475b4564074ef682bc14ad732812e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fa4380f565f969746c04ecddd432831"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html#a8fa4380f565f969746c04ecddd432831">readString</a> (int address)</td></tr>
+<tr class="memdesc:a8fa4380f565f969746c04ecddd432831"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a string starting at a given address.  <a href="classstorage_1_1_abstracted_storage.html#a8fa4380f565f969746c04ecddd432831">More...</a><br /></td></tr>
 <tr class="separator:a8fa4380f565f969746c04ecddd432831"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a362e9ca4f8980d03a8665dbf26741230"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html#a362e9ca4f8980d03a8665dbf26741230">writeString</a> (int address, std::string data)</td></tr>
+<tr class="memdesc:a362e9ca4f8980d03a8665dbf26741230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to storage.  <a href="classstorage_1_1_abstracted_storage.html#a362e9ca4f8980d03a8665dbf26741230">More...</a><br /></td></tr>
 <tr class="separator:a362e9ca4f8980d03a8665dbf26741230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae67c1034f4e19edd3792ebd089bab192"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html#ae67c1034f4e19edd3792ebd089bab192">readString</a> (int address, char *data)</td></tr>
+<tr class="memdesc:ae67c1034f4e19edd3792ebd089bab192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read string from storage.  <a href="classstorage_1_1_abstracted_storage.html#ae67c1034f4e19edd3792ebd089bab192">More...</a><br /></td></tr>
 <tr class="separator:ae67c1034f4e19edd3792ebd089bab192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb5ec80b7ded1a6c4cf5e0f8d391eb4a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html#acb5ec80b7ded1a6c4cf5e0f8d391eb4a">readByte</a> (int address)</td></tr>
 <tr class="separator:acb5ec80b7ded1a6c4cf5e0f8d391eb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa45a42519b3390110b80ac988fc3ce72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html#aa45a42519b3390110b80ac988fc3ce72">writeByte</a> (int address, uint8_t data)</td></tr>
 <tr class="separator:aa45a42519b3390110b80ac988fc3ce72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20b0a5c00266503c7900f8e397f58bdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html#a20b0a5c00266503c7900f8e397f58bdd">commit</a> ()</td></tr>
+<tr class="memdesc:a20b0a5c00266503c7900f8e397f58bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the changes to flash (ESP8266 and ESP32).  <a href="classstorage_1_1_abstracted_storage.html#a20b0a5c00266503c7900f8e397f58bdd">More...</a><br /></td></tr>
 <tr class="separator:a20b0a5c00266503c7900f8e397f58bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class used to abstract different stroage methods in ESP32 and ESP8266. </p>
+<div class="textblock"><p>Class to provide consistent API for accessing storage in ESP32 and ESP8266. </p>
 
-<p class="definition">Definition at line <a class="el" href="_storage_8h_source.html#l00040">40</a> of file <a class="el" href="_storage_8h_source.html">Storage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_storage_8h_source.html#l00047">47</a> of file <a class="el" href="_storage_8h_source.html">Storage.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a06475b4564074ef682bc14ad732812e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a06475b4564074ef682bc14ad732812e8">&#9670;&nbsp;</a></span>begin()</h2>
@@ -145,6 +150,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Initializes the EEPROM for storing and fetching data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>This is equal to EEPROM_SIZE </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This needs to be called before anyother method is called </dd></dl>
+
 </div>
 </div>
 <a id="a20b0a5c00266503c7900f8e397f58bdd"></a>
@@ -161,6 +175,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Save the changes to flash (ESP8266 and ESP32). </p>
+<dl class="section warning"><dt>Warning</dt><dd>Not calling commit will not save any changes made on a memory location. </dd></dl>
 
 </div>
 </div>
@@ -198,6 +215,23 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Read a string starting at a given address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Starting address of the string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::string Read string from storage</dd></dl>
+<h3><a class="anchor" id="autotoc_md12"></a>
+Example</h3>
+<div class="fragment"><div class="line">AbstractedStorage <a class="code" href="namespacestorage.html#afc0bc4a2dc9bc87b52289536593df3f4">storage</a>;</div>
+<div class="line"><a class="code" href="namespacestorage.html">storage</a>.begin(512);</div>
+<div class="line"> </div>
+<div class="line">std::string readData = <a class="code" href="namespacestorage.html">storage</a>.readString(10);</div>
+<div class="ttc" id="anamespacestorage_html"><div class="ttname"><a href="namespacestorage.html">storage</a></div><div class="ttdef"><b>Definition:</b> <a href="_storage_8h_source.html#l00041">Storage.h:41</a></div></div>
+<div class="ttc" id="anamespacestorage_html_afc0bc4a2dc9bc87b52289536593df3f4"><div class="ttname"><a href="namespacestorage.html#afc0bc4a2dc9bc87b52289536593df3f4">storage::storage</a></div><div class="ttdeci">AbstractedStorage storage</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="ae67c1034f4e19edd3792ebd089bab192"></a>
@@ -226,6 +260,22 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Read string from storage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Staring address from where the string needs to read </td></tr>
+    <tr><td class="paramname">data</td><td>Variable to which string data is copied</td></tr>
+  </table>
+  </dd>
+</dl>
+<h3><a class="anchor" id="autotoc_md14"></a>
+Example</h3>
+<p>Reading something that is stored at address 10 in EEPROM. </p><div class="fragment"><div class="line">AbstractedStorage <a class="code" href="namespacestorage.html#afc0bc4a2dc9bc87b52289536593df3f4">storage</a>;</div>
+<div class="line"><a class="code" href="namespacestorage.html">storage</a>.begin(512);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">char</span> something[20] = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a class="code" href="namespacestorage.html">storage</a>.readString(10, something);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="aa45a42519b3390110b80ac988fc3ce72"></a>
@@ -282,6 +332,28 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Write string to storage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Starting address where the string has to be written. </td></tr>
+    <tr><td class="paramname">data</td><td>String that has to be saved </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true Saved successfully </dd>
+<dd>
+false Not saved</dd></dl>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>This function internally calls commit. You <b>DON'T</b> need to call <a class="el" href="classstorage_1_1_abstracted_storage.html#a20b0a5c00266503c7900f8e397f58bdd" title="Save the changes to flash (ESP8266 and ESP32).">AbstractedStorage::commit()</a> explicitly</li>
+<li>Null character is automatically added to the end of the string.</li>
+</ul>
+</dd></dl>
+<h3><a class="anchor" id="autotoc_md13"></a>
+Example</h3>
+<div class="fragment"><div class="line">AbstractedStorage <a class="code" href="namespacestorage.html#afc0bc4a2dc9bc87b52289536593df3f4">storage</a>;</div>
+<div class="line"><a class="code" href="namespacestorage.html">storage</a>.begin(512);</div>
+<div class="line"><a class="code" href="namespacestorage.html">storage</a>.writeString(10, <span class="stringliteral">&quot;Hello World&quot;</span>);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

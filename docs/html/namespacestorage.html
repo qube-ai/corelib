@@ -34,7 +34,7 @@
    <div id="projectname">corelib
    &#160;<span id="projectnumber">1.0.10</span>
    </div>
-   <div id="projectbrief">Library for doing general things on ESP32 and ESP8266</div>
+   <div id="projectbrief">Library for handling storage, wifi connectivity, IoT Core connectivity, OTA update and WiFi cred changes on ESP8266 and ESP32.</div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('namespacestorage.html',''); initResiza
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1_abstracted_storage.html">AbstractedStorage</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class used to abstract different stroage methods in ESP32 and ESP8266.  <a href="classstorage_1_1_abstracted_storage.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to provide consistent API for accessing storage in ESP32 and ESP8266.  <a href="classstorage_1_1_abstracted_storage.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstorage_1_1wifi__cred.html">wifi_cred</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -567,7 +567,8 @@ Example</h3>
 false Failed to save</dd></dl>
 <h3><a class="anchor" id="autotoc_md10"></a>
 Example</h3>
-<div class="fragment"><div class="line">storage::setTimezon(19800);  <span class="comment">// 5 hrs 30 minutes = 19800 seconds</span></div>
+<div class="fragment"><div class="line"><a class="code" href="namespacestorage.html#a0371f2261a907af0126ac78e1cd8f293">storage::setTimezone</a>(19800);  <span class="comment">// 5 hrs 30 minutes = 19800 seconds</span></div>
+<div class="ttc" id="anamespacestorage_html_a0371f2261a907af0126ac78e1cd8f293"><div class="ttname"><a href="namespacestorage.html#a0371f2261a907af0126ac78e1cd8f293">storage::setTimezone</a></div><div class="ttdeci">bool setTimezone(long timezone_sec)</div><div class="ttdoc">Set current timezone to storage.</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
