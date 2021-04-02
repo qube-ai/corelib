@@ -1,27 +1,30 @@
 #if defined(CORELIB_IOTCORE)
 
-#include "messageHandler.h"
-#include "esp32/FOTA_esp32.h"
+    #include "messageHandler.h"
+
+    #include "esp32/FOTA_esp32.h"
 
 // // Forward declaring user defined userMessageReceived() function
 // void userMessageReceived(MQTTClient *client, char topic[], char bytes[],
 //                          int length);
 
 bool userMessageCallbackRegistered = false;
-void (*messageReceivedUserCallback)(MQTTClient *client, char topic[], char bytes[], int length);
+void (*messageReceivedUserCallback)(MQTTClient *client, char topic[],
+                                    char bytes[], int length);
 
 bool deviceStateCallbackRegistered = false;
 String (*deviceStateCallback)();
 
+    #if defined(CORELIB_FOTA)
 void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc) {
     Serial.println("Received a message to perform an OTA update.");
-    if(doc.containsKey("version")) {
+    if (doc.containsKey("version")) {
         fota::performOTAUpdate(doc["version"]);
-    }
-    else {
+    } else {
         Serial.println("Structure of version");
     }
 }
+    #endif
 
 void messageHandler::updateWifiCredHandler(StaticJsonDocument<120> doc) {
     Serial.println("Received a command to change WiFi cred");
@@ -59,34 +62,32 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
     bool sendNewStateMessage = false;
 
     int msg_type = doc["t"];
-    
+
     // Update SSID and Pass of device
-    if(msg_type == -1) {
+    if (msg_type == -1) {
         if (doc.containsKey("ssid") && doc.containsKey("pass") &&
-        doc.containsKey("index")) {
-        messageHandler::updateWifiCredHandler(doc);
-        sendNewStateMessage = true;
-        }
-        else {
+            doc.containsKey("index")) {
+            messageHandler::updateWifiCredHandler(doc);
+            sendNewStateMessage = true;
+        } else {
             Serial.println("WiFi cred update msg has improper syntax.");
         }
     }
-
-    else if(msg_type == -2) {
+    #if defined(CORELIB_FOTA)
+    else if (msg_type == -2) {
         if (doc.containsKey("version")) {
-        messageHandler::otaUpdateHandler(doc);
-        sendNewStateMessage = true;
-        }
-        else {
+            messageHandler::otaUpdateHandler(doc);
+            sendNewStateMessage = true;
+        } else {
             Serial.println("OTA update message has improper syntax.");
         }
     }
+    #endif
 
     else {
-        if(userMessageCallbackRegistered) {
+        if (userMessageCallbackRegistered) {
             messageReceivedUserCallback(client, topic, bytes, length);
-        }
-        else {
+        } else {
             Serial.println("user message callback hasn't been registered.");
         }
     }
@@ -95,21 +96,21 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
     if (sendNewStateMessage) {
         // Send a state update back to the server
         String stateInfo;
-        if(deviceStateCallbackRegistered) {
+        if (deviceStateCallbackRegistered) {
             stateInfo = deviceStateCallback();
-        }
-        else {
+        } else {
             stateInfo = "{\"ping\": \"pong\"}";
         }
-        
+
         Serial.print("Sending state update -> ");
         Serial.println(stateInfo);
-        
+
         iotcore::publishState(stateInfo);
     }
 }
 
-void messageHandler::registerUserCallback(void (*callbackFunction)(MQTTClient *client, char topic[], char bytes[], int length)) {
+void messageHandler::registerUserCallback(void (*callbackFunction)(
+    MQTTClient *client, char topic[], char bytes[], int length)) {
     userMessageCallbackRegistered = true;
     messageReceivedUserCallback = callbackFunction;
     Serial.println("An incoming cloud message handler was assigned.");
@@ -120,6 +121,5 @@ void messageHandler::registerDeviceStateFunction(String (*callback)()) {
     deviceStateCallback = callback;
     Serial.println("device state generator was registered.");
 }
-
 
 #endif
