@@ -10,7 +10,7 @@
 
 bool userMessageCallbackRegistered = false;
 void (*messageReceivedUserCallback)(MQTTClient *client, char topic[],
-                                    char bytes[], int length);
+                                    StaticJsonDocument<120> doc);
 
 bool deviceStateCallbackRegistered = false;
 String (*deviceStateCallback)();
@@ -86,7 +86,13 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
 
     else {
         if (userMessageCallbackRegistered) {
-            messageReceivedUserCallback(client, topic, bytes, length);
+            // char t_topic[100] = "";
+            // char t_payload[length] = "";
+
+            // strcpy(t_topic, topic);
+            // strcpy(t_payload, bytes);
+
+            messageReceivedUserCallback(client, topic, doc);
         } else {
             Serial.println("user message callback hasn't been registered.");
         }
@@ -110,7 +116,7 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
 }
 
 void messageHandler::registerUserCallback(void (*callbackFunction)(
-    MQTTClient *client, char topic[], char bytes[], int length)) {
+    MQTTClient *client, char topic[], StaticJsonDocument<120> doc)) {
     userMessageCallbackRegistered = true;
     messageReceivedUserCallback = callbackFunction;
     Serial.println("An incoming cloud message handler was assigned.");

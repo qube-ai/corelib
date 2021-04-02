@@ -21,7 +21,8 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
 namespace messageHandler {
     void updateWifiCredHandler(StaticJsonDocument<120> doc);
     void otaUpdateHandler(StaticJsonDocument<120> doc);
-    void registerUserCallback(void (*messageReceivedUserCallback)(MQTTClient *client, char topic[], char bytes[], int length));
+    void registerUserCallback(void (*messageReceivedUserCallback)(
+        MQTTClient *client, char topic[], StaticJsonDocument<120> doc));
     void registerDeviceStateFunction(String (*deviceStateCallback)());
 }  // namespace messageHandler
 
