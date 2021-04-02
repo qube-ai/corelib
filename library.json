@@ -1,6 +1,6 @@
 {
     "name": "corelib",
-    "version": "1.0.10",
+    "version": "1.1.0",
     "description": "Common working base for all our devices.",
     "keywords": "wifi,storage,iot-core,app-communication,status-led,fota",
     "authors": {
@@ -8,9 +8,9 @@
       "email": "apoorva@getqube.in"
     },
     "dependencies": {
-      "256dpi/MQTT": "2.4.8",
+      "256dpi/MQTT": "2.5.0",
       "googlecloudplatform/Google Cloud IoT Core JWT": "1.1.11",
-      "bblanchon/ArduinoJson": "6.17.2",
+      "bblanchon/ArduinoJson": "6.17.3",
       "jandelgado/JLed": "4.5.2"
     },
     "repository": {
@@ -65,6 +65,14 @@
         "base": "examples/6_fota",
         "files": [
           "fota_example.cpp"
+        ]
+      },
+      {
+        "name": "7_gateway",
+        "base": "examples/7_gateway",
+        "files": [
+          "gateway_example.cpp",
+          "init.cpp"
         ]
       }
     ]
