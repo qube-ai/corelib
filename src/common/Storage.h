@@ -4,6 +4,10 @@
 
 #include <string>
 
+/**
+ * @brief Number of bytes to initialize the EEPROM with
+ * 
+ */
 #define EEPROM_SIZE 512
 
 #define SSID0_START 0
@@ -35,20 +39,100 @@
 #define AVAILABLE_SSIDS 5
 
 namespace storage {
-    
-    /// Class used to abstract different stroage methods in ESP32 and ESP8266
+
+    /**
+     * @brief Class to provide consistent API for accessing storage in ESP32 and ESP8266.
+     * 
+     */
     class AbstractedStorage {
        public:
+
+       /**
+        * @brief Initializes the EEPROM for storing and fetching data
+        * 
+        * @param size This is equal to EEPROM_SIZE
+        * @note This needs to be called before anyother method is called
+        */
         void begin(int size);
 
+        /**
+         * @brief Read a string starting at a given address
+         * 
+         * @param address Starting address of the string
+         * @return std::string Read string from storage
+         * 
+         * ### Example
+         * ~~~~~~~~~~~~~~.cpp
+         * 
+         * AbstractedStorage storage;
+         * storage.begin(512);
+         * 
+         * std::string readData = storage.readString(10);
+         * 
+         * ~~~~~~~~~~~~~~
+         * 
+         */
         std::string readString(int address);
+
+        /**
+         * @brief Write string to storage
+         * 
+         * @param address Starting address where the string has to be written.
+         * @param data String that has to be saved
+         * @return true Saved successfully
+         * @return false Not saved
+         * 
+         * @note 
+         *   - This function internally calls commit. You **DON'T** need to call AbstractedStorage::commit() explicitly
+         *   - Null character is automatically added to the end of the string.
+         * 
+         * ### Example
+         * ~~~~~~~~~~~~~~.cpp
+         * 
+         * AbstractedStorage storage;
+         * storage.begin(512);
+         * storage.writeString(10, "Hello World");
+         * 
+         * ~~~~~~~~~~~~~~
+         * 
+         */
         bool writeString(int address, std::string data);
 
+        /**
+         * @brief Read string from storage
+         * 
+         * @param address Staring address from where the string needs to read
+         * @param data Variable to which string data is copied
+         * 
+         * ### Example
+         * Reading something that is stored at address 10 in EEPROM.
+         * ~~~~~~~~~~~~~~.cpp
+         * 
+         * AbstractedStorage storage;
+         * storage.begin(512);
+         * 
+         * char something[20] = "";
+         * storage.readString(10, something);
+         * 
+         * ~~~~~~~~~~~~~~
+         * 
+         */
         void readString(int address, char *data);
 
+        /**
+         * @brief Read a byte from the given address
+         * 
+         * @param address Address from where the byte has to read
+         * @return uint8_t Value of the byte read as an unsigned integer value.
+         */
         uint8_t readByte(int address);
+
         void writeByte(int address, uint8_t data);
 
+        /**
+         * @brief Save the changes to flash (ESP8266 and ESP32).
+         * @warning Not calling commit will not save any changes made on a memory location.
+         */
         void commit();
     };
 
