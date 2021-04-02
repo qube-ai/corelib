@@ -52,6 +52,7 @@ List of build variables that can be changed during the build phase
   - CORELIB_STORAGE
   - CORELIB_WIFI_MANAGER
   - CORELIB_FOTA
+  - CORELIB_GATEWAY
 
 ## Design
 
