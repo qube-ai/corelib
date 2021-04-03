@@ -44,6 +44,14 @@ Type -2 for sending an OTA update
 }
 ```
 
+Type -3 for adding a device to gateway
+```
+{
+  "t": -3,
+  "device_id": "SW2-30A-12"
+}
+```
+
 ## Configurations
 List of build variables that can be changed during the build phase
   - CORELIB_APP_COMM

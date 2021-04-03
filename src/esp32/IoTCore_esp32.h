@@ -28,6 +28,7 @@ namespace iotcore {
 #if defined(CORELIB_GATEWAY)
     bool publishDelegateTelemetry(String delegateId, String data);
     bool publishDelegateState(String delegateId, String data);
+    void addNodeToGateway(String newDeviceId);
 #endif
 
     void mainLoop();

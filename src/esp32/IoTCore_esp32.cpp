@@ -70,6 +70,42 @@ static void setupNodes() {
     }
 }
 
+void iotcore::addNodeToGateway(String newDeviceId) {
+    if (!SPIFFS.begin()) {
+        Serial.println("Failed to mount file system.");
+        return;
+    }
+
+    File f = SPIFFS.open("/devices.txt", "r+");
+    String list_of_nodes;
+    if (f) {
+        // 512 bytes can store upto 50 devices
+        StaticJsonDocument<512> doc;
+        DeserializationError error = deserializeJson(doc, f);
+        if (error) {
+            Serial.println("Failed to read devices.txt file.");
+            return;
+        }
+
+        doc.add(newDeviceId);
+
+        serializeJson(doc, list_of_nodes);
+        Serial.println("Final updated list -> " + list_of_nodes);
+        f.close();
+
+        Serial.print("Saving new list to SPIFFS...");
+        File f = SPIFFS.open("/devices.txt", "w");
+        serializeJson(doc, f);
+        f.close();
+        Serial.println("DONE");
+
+        Serial.print("Attaching delegate device(" + newDeviceId + ")...");
+        attachAndSubscribeNode(newDeviceId);
+        mqttClient->loop();
+        Serial.println("DONE");
+    }
+}
+
     #endif
 
 static void getPrivateKey(char *private_key) {

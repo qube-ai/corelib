@@ -21,7 +21,18 @@ void messageHandler::otaUpdateHandler(StaticJsonDocument<120> doc) {
     if (doc.containsKey("version")) {
         fota::performOTAUpdate(doc["version"]);
     } else {
-        Serial.println("Structure of version");
+        Serial.println("version key not found in incoming JSON");
+    }
+}
+    #endif
+
+    #if defined(CORELIB_GATEWAY)
+void addNodeToGatewayHandler(StaticJsonDocument<120> doc) {
+    Serial.println("Received a message to add a node to Gateway.");
+    if (doc.containsKey("device_id")) {
+        iotcore::addNodeToGateway(doc["device_id"]);
+    } else {
+        Serial.println("device_id key not found in incoming JSON");
     }
 }
     #endif
@@ -81,6 +92,13 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
         } else {
             Serial.println("OTA update message has improper syntax.");
         }
+    }
+    #endif
+
+    #if defined(CORELIB_GATEWAY)
+    else if (msg_type == -3) {
+        Serial.println("Type -3 message handler was triggered.");
+        addNodeToGatewayHandler(doc);
     }
     #endif
 

@@ -19,7 +19,7 @@ void setup() {
     corelib::setup();
 
     // Set WiFi creds
-    storage::setWiFiCreds(0, "Apoorva", "testing123");
+    storage::setWiFiCreds(0, "Qube", "Deepwaves007");
     storage::setWiFiCreds(1, "Hrithik", "testing123");
     storage::setWiFiCreds(2, "", "");
     storage::setWiFiCreds(3, "", "");
