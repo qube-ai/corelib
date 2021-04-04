@@ -47,7 +47,7 @@ void setup() {
     storage::setProjectID("podnet-switch");
     storage::setLocation("us-central1");
     storage::setRegistryID("gen-2");
-    storage::setDeviceID("GT2-A-1");
+    storage::setDeviceID("GT2-A-2");
     storage::setTimezone(19800);
 
     // Get IoTCore details

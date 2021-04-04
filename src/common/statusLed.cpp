@@ -1,5 +1,8 @@
 #if defined(CORELIB_STATUS_LED)
-#include "statusLed.h"
+    #include "statusLed.h"
+
+short STATUS_LED_PIN = 13;
+// TODO add a method to specify the pin to be used for status led
 
 JLed hw_led = JLed(STATUS_LED_PIN).Off();
 enum status_led_state_t current_state = OFF;

@@ -10,10 +10,6 @@ void corelib::setup() {
 
     delay(1000);
 
-#if defined(CORELIB_STATUS_LED)
-    status_led::setup_started();
-#endif
-
     Serial.println("Starting setup ");
 
 #if defined(CORELIB_STORAGE)
@@ -32,10 +28,6 @@ void corelib::setup() {
 #endif
 
     Serial.println("Setup complete");
-
-#if defined(CORELIB_STATUS_LED)
-    status_led::setup_complete();
-#endif
 }
 
 void corelib::loop() {

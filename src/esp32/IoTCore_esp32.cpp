@@ -152,31 +152,55 @@ static void getPrivateKey(char *private_key) {
 }
 
 bool iotcore::publishTelemetry(String data) {
+    #if defined(CORELIB_STATUS_LED)
+    status_led::uplink_started();
+    #endif
     return mqtt->publishTelemetry(data);
 }
 
 bool iotcore::publishTelemetry(const char *data, int length) {
+    #if defined(CORELIB_STATUS_LED)
+    status_led::uplink_started();
+    #endif
     return mqtt->publishTelemetry(data, length);
 }
 
 bool iotcore::publishTelemetry(String subfolder, String data) {
+    #if defined(CORELIB_STATUS_LED)
+    status_led::uplink_started();
+    #endif
     return mqtt->publishTelemetry(subfolder, data);
 }
 
 bool iotcore::publishTelemetry(String subfolder, const char *data, int length) {
+    #if defined(CORELIB_STATUS_LED)
+    status_led::uplink_started();
+    #endif
     return mqtt->publishTelemetry(subfolder, data, length);
 }
 
-bool iotcore::publishState(String data) { return mqtt->publishState(data); }
+bool iotcore::publishState(String data) {
+    #if defined(CORELIB_STATUS_LED)
+    status_led::uplink_started();
+    #endif
+    return mqtt->publishState(data);
+}
 
     #if defined(CORELIB_GATEWAY)
 bool iotcore::publishDelegateTelemetry(String delegateId, String data) {
+        #if defined(CORELIB_STATUS_LED)
+    status_led::uplink_started();
+        #endif
     return mqttClient->publish(
         String("/devices/" + delegateId + "/events").c_str(),
         String(data).c_str(), false, 1);
 }
 
 bool iotcore::publishDelegateState(String delegateId, String data) {
+        #if defined(CORELIB_STATUS_LED)
+    status_led::uplink_started();
+        #endif
+
     return mqttClient->publish(
         String("/devices/" + delegateId + "/state").c_str(),
         String(data).c_str(), false, 1);
@@ -234,9 +258,14 @@ void iotcore::mainLoop() {
     mqtt->loop();
     delay(10);
 
+    // Do this if we are disconnected to
     if (!mqttClient->connected()) {
         wifiman::reconnectWiFi(true);
         mqtt->mqttConnectAsync();
+
+    #if defined(CORELIB_STATUS_LED)
+        status_led::mqtt_disconnected();
+    #endif
 
     #if defined(CORELIB_GATEWAY)
         setupNodes();
@@ -245,10 +274,12 @@ void iotcore::mainLoop() {
     }
 }
 
+// NOT USED anymore
 void iotcore::mqttLoop() {
     if (!mqtt->loop()) { mqtt->mqttConnectAsync(); }
 }
 
+// NOT USED anymore
 bool iotcore::connectedToMqtt() { return mqtt->loop(); }
 
 #endif

@@ -16,6 +16,7 @@
 #include "../common/Storage.h"
 #include "../common/WiFiManager.h"
 #include "../common/messageHandler.h"
+#include "../common/statusLed.h"
 
 namespace iotcore {
     // To publish data to Cloud IoT Core

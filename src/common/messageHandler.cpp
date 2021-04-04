@@ -68,6 +68,8 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
     Serial.print(" - ");
     Serial.println(bytes);
 
+    status_led::downlink_started();
+
     StaticJsonDocument<120> doc;
     deserializeJson(doc, bytes);
     bool sendNewStateMessage = false;

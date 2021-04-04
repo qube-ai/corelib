@@ -2,10 +2,15 @@
 
 #include <jled.h>
 
-#include "ESP8266WiFi.h"
-#include "IoTCore_esp8266.h"
+#if defined(ESP32)
+    #include "WiFi.h"
+    #include "esp32/IoTCore_esp32.h"
+#endif
 
-#define STATUS_LED_PIN 12
+#if defined(ESP8266)
+    #include "ESP8266WiFi.h"
+    #include "IoTCore_esp8266.h"
+#endif
 
 enum status_led_state_t {
     OFF,
