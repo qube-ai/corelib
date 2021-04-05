@@ -68,7 +68,9 @@ void messageReceivedAdvanced(MQTTClient *client, char topic[], char bytes[],
     Serial.print(" - ");
     Serial.println(bytes);
 
+    #if defined(CORELIB_STATUS_LED)
     status_led::downlink_started();
+    #endif
 
     StaticJsonDocument<120> doc;
     deserializeJson(doc, bytes);

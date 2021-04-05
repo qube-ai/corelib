@@ -1,6 +1,6 @@
 {
     "name": "corelib",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "Library for handling storage, wifi connectivity, IoT Core connectivity, OTA update and WiFi cred changes on ESP8266 and ESP32. ",
     "keywords": "wifi,storage,iot-core,app-communication,status-led,fota",
     "authors": {
