@@ -30,6 +30,8 @@
 
 #if defined(ESP8266) && defined(CORELIB_IOTCORE)
     #include "esp8266/IoTCore_esp8266.h"
+    // Message handler for processing incoming commands/configs
+    #include "common/messageHandler.h"
 #endif
 
 namespace corelib {

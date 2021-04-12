@@ -26,7 +26,7 @@
     #include "common/Storage.h"
 #endif
 #if defined(CORELIB_WIFI_MANAGER)
-    #include "WiFiManager.h"
+    #include "common/WiFiManager.h"
 #endif
 
 #if defined(CORELIB_STATUS_LED)

@@ -1,8 +1,16 @@
 #pragma once
 
+// Base imports
 #include <Arduino.h>
 
+// Library imports
 #include "ArduinoJson.h"
+#include "CloudIoTCore.h"
+#include "CloudIoTCoreDevice.h"
+#include "CloudIoTCoreMqtt.h"
+#include "MQTT.h"
+
+// Corelib imports
 #include "common/Storage.h"
 
 #if defined(ESP32)

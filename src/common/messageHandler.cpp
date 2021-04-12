@@ -2,7 +2,13 @@
 
     #include "messageHandler.h"
 
-    #include "esp32/FOTA_esp32.h"
+    #if defined(ESP32)
+        #include "esp32/FOTA_esp32.h"
+    #endif
+
+    #if defined(ESP8266)
+        #include "esp8266/FOTA_esp8266.h"
+    #endif
 
 // // Forward declaring user defined userMessageReceived() function
 // void userMessageReceived(MQTTClient *client, char topic[], char bytes[],
