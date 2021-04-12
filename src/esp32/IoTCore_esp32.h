@@ -36,8 +36,6 @@ namespace iotcore {
 
     void setupCloudIoT();
 
-    void mqttLoop();
-
     bool connectedToMqtt();
 }  // namespace iotcore
 

@@ -275,11 +275,6 @@ void iotcore::mainLoop() {
 }
 
 // NOT USED anymore
-void iotcore::mqttLoop() {
-    if (!mqtt->loop()) { mqtt->mqttConnectAsync(); }
-}
-
-// NOT USED anymore
 bool iotcore::connectedToMqtt() { return mqtt->loop(); }
 
 #endif
