@@ -153,20 +153,21 @@ void iotcore::setupCloudIoT() {
     mqtt->startMQTTAdvanced();  // Opens connection using advanced callback
 }
 
-void iotcore::mqttLoop() {
-    status_led::update();
-    bool connected = mqtt->loop();
-
-    if (!connected) { mqtt->mqttConnectAsync(); }
-    status_led::update();
-}
-
 bool iotcore::connectedToMqtt() { return mqtt->loop(); }
 
-void iotcore::logSomeShit() {
-    // mqtt->logError();
-    mqtt->logReturnCode();
-    // mqtt->logConfiguration(false);
+void iotcore::mainLoop() {
+    mqtt->loop();
+    delay(10);
+
+    // Do this if we are disconnected to
+    if (!mqttClient->connected()) {
+        wifiman::reconnectWiFi(true);
+        mqtt->mqttConnectAsync();
+
+    #if defined(CORELIB_STATUS_LED)
+        status_led::mqtt_disconnected();
+    #endif
+    }
 }
 
 #endif
