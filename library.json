@@ -1,6 +1,6 @@
 {
     "name": "corelib",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "description": "Library for handling storage, wifi connectivity, IoT Core connectivity, OTA update and WiFi cred changes on ESP8266 and ESP32. ",
     "keywords": "wifi,storage,iot-core,app-communication,status-led,fota",
     "authors": {
@@ -27,49 +27,49 @@
     "examples": [
       {
         "name": "1_storage",
-        "base": "examples/1_storage",
+        "base": "examples/esp32/1_storage",
         "files": [
           "storage_example.cpp"
         ]
       },
       {
         "name": "2_wifi_manager",
-        "base": "examples/2_wifi_manager",
+        "base": "examples/esp32/2_wifi_manager",
         "files": [
           "wifi_manager_example.cpp"
         ]
       },
       {
         "name": "3_cloud_iotcore",
-        "base": "examples/3_cloud_iotcore",
+        "base": "examples/esp32/3_cloud_iotcore",
         "files": [
           "cloud_iotcore_example.cpp"
         ]
       },
       {
         "name": "4_message_handler",
-        "base": "examples/4_message_handler",
+        "base": "examples/esp32/4_message_handler",
         "files": [
           "message_handler_example.cpp"
         ]
       },
       {
         "name": "5_device_state",
-        "base": "examples/5_device_state",
+        "base": "examples/esp32/5_device_state",
         "files": [
           "device_state_example.cpp"
         ]
       },
       {
         "name": "6_fota",
-        "base": "examples/6_fota",
+        "base": "examples/esp32/6_fota",
         "files": [
           "fota_example.cpp"
         ]
       },
       {
         "name": "7_gateway",
-        "base": "examples/7_gateway",
+        "base": "examples/esp32/7_gateway",
         "files": [
           "gateway_example.cpp",
           "init.cpp"
@@ -77,9 +77,17 @@
       },
       {
         "name": "8_status_led",
-        "base": "examples/8_status_led",
+        "base": "examples/esp32/8_status_led",
         "files": [
           "status_led_example.cpp"
+        ]
+      },
+      {
+        "name": "5_device_state-esp8266",
+        "base": "examples/esp8266/5_device_state",
+        "files": [
+          "device_state_example.cpp",
+          "init.cpp"
         ]
       }
     ]
