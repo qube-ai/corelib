@@ -1,6 +1,9 @@
 # corelib
 Library for faster development of IoT devices.
 
+## ESP8266
+  See this [repo](https://github.com/qube-ai/esp8266-corelib-example) for example implementation.
+
 ## Defaults
   - If serial connection is not configured, then it is setup at 115200 baud
 
