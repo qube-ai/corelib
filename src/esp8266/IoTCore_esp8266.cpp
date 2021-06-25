@@ -145,8 +145,8 @@ void iotcore::setupCloudIoT() {
 
     mqttClient = new MQTTClient(512);
 
-    mqttClient->setOptions(1000, true,
-                           1000);  // keepAlive, cleanSession, timeout
+    mqttClient->setOptions(86400, true,
+                           2000);  // keepAlive, cleanSession, timeout
     mqtt = new CloudIoTCoreMqtt(mqttClient, &netClient, &device);
     mqtt->setLogConnect(false);
     mqtt->setUseLts(true);
@@ -161,8 +161,9 @@ void iotcore::mainLoop() {
 
     // Do this if we are disconnected to
     if (!mqttClient->connected()) {
-        wifiman::reconnectWiFi(true);
-        mqtt->mqttConnectAsync();
+        Serial.println("It looks like we are disconnected to MQTT Server");
+        // wifiman::reconnectWiFi(true);
+        mqtt->mqttConnect();
 
     #if defined(CORELIB_STATUS_LED)
         status_led::mqtt_disconnected();
